@@ -1,0 +1,109 @@
+/* GLOBALS */
+html{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font: small-caps bold 16px/1 sans-serif;
+}
+body{
+    background-color: black !important;
+    color: white !important;
+}
+h1{
+    margin-bottom: 1rem !important;
+}
+.container{
+    background-color: black !important;
+    color: white;
+    text-align: center;
+}
+.nav{
+    margin-top: 50px;
+    border: burlywood solid 2px;
+    border-radius: 5px;
+}
+.nav-link{
+    background-color: black;
+    color: burlywood;
+    margin: 5px;
+}
+.nav-link:hover{
+    background-color: burlywood;
+    color: black;
+    cursor: pointer;
+}
+.audio{
+    margin-top: 30px;
+}
+.interface{
+    display: flex;
+    justify-content: space-around;
+    color: burlywood;
+    margin-top: 3rem;
+    font: bold 1.2em "Fira Sans", serif;
+    font-size: small;
+}
+#infosCharacter{
+    display: flex;
+    justify-content: space-between;
+}
+
+.interfaceColumn{
+    display: flex;
+    flex-direction: column !important;
+}
+.buttonPerso{
+    background-color: burlywood;
+    border: chocolate solid 2px;
+    color: black;
+    padding: 5px;
+    display: flex;
+    vertical-align: center;
+    justify-content: center;
+}
+.buttonPerso:link, .buttonPerso:visited {
+    background-color: black;
+    color: blanchedalmond;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.buttonPerso:hover, .buttonPerso:active {
+    background-color: burlywood;
+    color: black;
+}
+
+
+
+/* INDEX */
+.titreIndex{
+    margin-bottom: 20px;
+}
+.titreMenu{
+    margin: 2%;
+    border: burlywood solid 1px;
+}
+.showPseudo{
+    color: burlywood;
+    font-size: 26px;
+    font-weight: bold;
+}
+.showPseudo:hover{
+    cursor: pointer;
+}
+.showPseudoScoreBoard{
+    color: burlywood;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* TABLEAU SCORES */
+.tablePerso{
+    border: solid 2px ;
+    border-color: burlywood;
+    border-collapse: unset;
+}
