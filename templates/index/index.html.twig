@@ -4,10 +4,8 @@
 
 {% block body %}
 
-    <style></style>
-
     <div class="container">
-        <h1 class="titreIndex">HTML5 GAMING - By Enes et Mickael</h1>
+        <h1 class="titreIndex">HTML5 GAMING REMASTERED - By Enes et Mickael</h1>
         <audio id="audio" class="audio" autoplay loop controls src="assets/music/index.mp3"></audio>
         <br/>
         <br/>
@@ -38,6 +36,10 @@
         <input class="btn-secondary" type="submit" value="Voir le tableau des scores" />
         </form>
     </div>
+
+    <script>
+        {% include "index/index.js" %}
+    </script>
 
 {% endblock %}
 

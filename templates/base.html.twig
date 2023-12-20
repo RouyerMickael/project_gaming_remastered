@@ -18,6 +18,8 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-        <script src="index.js" type="text/javascript"></script>
     </body>
+    <script>
+        {% block javascript %}{% endblock %}
+    </script>
 </html>

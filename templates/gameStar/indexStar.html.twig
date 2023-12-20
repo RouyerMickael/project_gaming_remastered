@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="Phaser.js game demo" />
+  <meta charset="utf-8">
+  <title>Phaser.js game demo</title>
+  <link rel="stylesheet" href="../assets/css/htmlGaming.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/phaser/2.0.5/phaser.min.js" type="text/javascript"></script>
+</head>
+<body class="game">
+  <h1>HTML5 GAMING - Star Wars</h1>
+  <nav><a class="nav-link buttonPerso" href="/">Retour au menu principal</a></nav>
+  <audio id="audioMusic" class="audio" loop controls src="{{asset('assets/gameStar/assetsGame/audios/musics/victory.mp3')}}"></audio>
+  <audio id="audioMusicDeath" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/musics/defeat.mp3')}}"></audio>
+  <audio id="audioMusicMenu" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/musics/menu.mp3')}}"></audio>
+
+  <audio id="audioDeath" class="audio" src="{{asset('assets/gameStar/assetsGame/audios/death/Je-ne-dirai-pas-ne-pleurez-pas-car-toutes-les-larmes-ne-sont-pas-un-mal.mp3')}}"></audio>
+  <audio id="audioShoot2" class="audio" src="{{asset('assets/gameStar/assetsGame/audios/sounds/mp3/tirFleche2.mp3')}}"></audio>
+  <audio id="audioShoot3" class="audio" src="{{asset('assets/gameStar/assetsGame/audios/sounds/mp3/tirFleche3.mp3')}}"></audio>
+  <audio id="audioShootBoss" class="audio" src="{{asset('assets/gameStar/assetsGame/audios/sounds/mp3/tirBoss.wav')}}"></audio>
+  <audio id="audioLifeDown" class="audio" src="{{asset('assets/gameStar/assetsGame/audios/sounds/mp3/viePerdue.mp3')}}"></audio>
+  <audio id="audioHitEnnemie" class="audio" src="{{asset('assets/gameStar/assetsGame/audios/sounds/mp3/cibleTouchee.mp3')}}"></audio>
+  <audio id="audioSonicBomb" class="audio" src="{{asset('assets/gameStar/assetsGame/audios/sounds/mp3/bombe_sonique.mp3')}}"></audio>
+
+
+  <audio id="audioCinema" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/ambiances/r2d2.mp3')}}"></audio>
+  <audio id="audioDescriptionXwing" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/description/X-Wing.mp3')}}"></audio>
+  <audio id="audioDescriptionYwing" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/description/Y-wing.mp3')}}"></audio>
+  <audio id="audioDescriptionAwing" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/description/A-Wing.mp3')}}"></audio>
+  
+  <div class="interface">
+    <div class="col">
+    <div class="row" style="width: 824px; height:100px">        
+      <iframe id="textBonus" src="https://giphy.com/embed/wsWKIMl5089Q6HEole" width="200" height="100" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+    </div>
+    <div class="row">
+      <div id="imagePlayer" class="col-3">
+        <img alt="player" height="120" src="{{asset('assets/gameStar/assetsGame/images/players/luke.png')}}">
+      </div>
+      <div id="infosCharacter" class="col-6 interfaceColumn">
+        <div id="cinema">
+          <img alt="gifs cinema" height="120" width=200 src="{{asset('assets/gameStar/assetsGame/images/cinema/r2.gif')}}">   
+        </div>
+      </div>
+      <div class="col-3">
+        <img alt="player" height="120" src="{{asset('assets/gameStar/assetsGame/images/players/globalTie.png')}}">
+      </div>
+    </div>
+    </div>
+  </div>
+  {# <script src="gameStar.js" type="text/javascript"></script> #}
+  {% include "gameStar/gameStar.html.twig" %}
+</body>
+</html>

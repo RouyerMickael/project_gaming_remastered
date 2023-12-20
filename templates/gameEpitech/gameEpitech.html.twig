@@ -1,0 +1,1045 @@
+<script>
+
+//audio menu
+// let audioMusicMenu = document.getElementById('audioMusicMenu');
+// audioMusicMenu.play();
+//choix du personnage
+// let character = prompt("Quel personnage voulez-vous incarner ('legolas', 'gimli', ou 'gandalf') ?").toLowerCase();
+let character = 'guitare';
+let imageCharacter ='';
+let imageWeapon = '';
+let characterLife = '';
+let characterInfos = '';
+switch (character) {
+    case 'guitare':
+        imageCharacter = `<img alt="player" height="120" src="{{asset('assets/gameEpitech/assetsGame/images/players/GandalfOrigine.png')}}">`;
+        characterWeapon = "{{asset('assets/gameEpitech/assetsGame/images/weapons/gandalf/baton.png')}}";
+        characterBullets = "{{asset('assets/gameEpitech/assetsGame/images/weapons/gandalf/tir1.png')}}";
+        // characterInfos = '<p>Gandalf</p><p>Qualités: equilibré / Défauts: équilibré</p><p>Solide contre: équilibré / Faible contre: équilibré</p>'
+        characterLife = 100
+        characterSpeedShoot= 300;
+        characterBulletSpeed= 800;
+        characterWeaknessEnemies1= 1;
+        characterWeaknessEnemies2= 1;
+        characterWeaknessBoss= 1;
+        characterAcceleration=1000;
+        characterMaxSpeed = 500;
+        break;
+    default:
+        alert("Ce personnage n'existe pas ou n'est pas disponible");
+        window.location.reload();
+}
+let imagePlayer = document.getElementById('imagePlayer');
+imagePlayer.innerHTML = imageCharacter;
+// let infosCharacter = document.getElementById('infosCharacter');
+// infosCharacter.innerHTML = characterInfos;
+
+
+
+//choix des commandes
+// let controlChoices = prompt("Quels controles souhaites-vous ('clavier' ou 'souris') ?").toLowerCase();
+// if(controlChoices!="souris" && controlChoices!="clavier"){
+//     alert("Ces commandes n'existent pas.");
+//     window.location.reload();
+// }
+alert("Ce jeu se joue à la souris:\ndéplacements latéraux = déplacer la souris ; tirs = clic gauche.\nGardez le rythme !")
+let controlChoices = "souris"
+
+
+//lancements sonores, liste audios
+// audioMusicMenu.pause();
+// audioMusicMenu.currentTime=0;
+let audioMusic = document.getElementById('audioMusic');
+audioMusic.play();
+let audioAmbiance = document.getElementById('audioAmbiance');
+audioAmbiance.play();
+
+
+let audioDeath = document.getElementById('audioDeath');
+let audioMusicDeath = document.getElementById('audioMusicDeath');
+
+let audioShoot2 = document.getElementById('audioShoot2');
+let audioShoot3 = document.getElementById('audioShoot3');
+let audioShootBoss = document.getElementById('audioShootBoss');
+let audioLifeDown = document.getElementById('audioLifeDown');
+let audioHitEnnemie = document.getElementById('audioHitEnnemie');
+
+
+
+//chargement du jeu
+var game = new Phaser.Game(800,600, Phaser.AUTO, 'phaser-demo', {preload: preload, create: create, update: update, render: render});
+
+// instanciation des variables
+var battleField;
+var battleFieldSpeed=4;
+
+var timeoutDeathMusic;
+var playerIsDead = false;
+
+var player;
+var playerLife;
+var playerDrag = 1000;
+var playerMaxSpeed = characterMaxSpeed;
+var playerAcceleration = characterAcceleration;
+var playerDeath;
+var gameOver;
+
+
+var playerSpeedShoot = characterSpeedShoot;
+var playerLife = characterLife;
+var playerBulletSpeed = characterBulletSpeed;
+var playerWeaknessEnemies1 = characterWeaknessEnemies1;
+var playerWeaknessEnemies2 = characterWeaknessEnemies2;
+var playerWeaknessBoss = characterWeaknessBoss;
+
+
+var commandes;
+var fireButton;
+var bullets;
+var bulletTimer = 0;
+var explosions;
+var score = 0;
+
+var countVagues=1;
+var vague=countVagues;
+
+var firstEnemies;
+var firstEnemiesLaunchTimer;
+//ennemis1 : fréquence d'arrivée
+var firstEnemiesSpacing = 1000;
+var firstEnemiesSpeed = 300;
+
+var secondEnemies;
+var secondEnemiesLaunchTimer;
+var secondEnemiesLaunched = false;
+//ennemis2 : fréquence d'arrivée
+var secondEnemiesSpacing = 10000;
+
+var rotation;
+var propulsion;
+
+var bossLaunchTimer;
+var bossHealth=300;
+var bossLaunched = false;
+var bossSpacing = 40000;
+var bossBulletTimer = 0;
+var bossYdirection = -1;
+
+
+
+
+
+
+
+
+function preload() {
+    //chargement assets
+    game.load.image('battleField', "{{asset('assets/gameEpitech/assetsGame/images/fields/mine.jpg')}}");
+    game.load.image('weapon', characterWeapon);
+    game.load.image('bullet', characterBullets);
+    game.load.image('first-enemy', "{{asset('assets/gameEpitech/assetsGame/images/enemies/orc1.png')}}");
+    game.load.image('second-enemy', "{{asset('assets/gameEpitech/assetsGame/images/enemies/bowman1.png')}}");
+    game.load.image('secondEnemiesBullet', "{{asset('assets/gameEpitech/assetsGame/images/weapons/enemies/flecheEnnemis1.png')}}");
+    //détermine en largeur & hauteur la manière de découper le stylesheet pour l'animation
+    game.load.spritesheet('explosion', "{{asset('assets/gameEpitech/assetsGame/images/deaths/explosion.png')}}", 108, 100);
+    game.load.image('boss', "{{asset('assets/gameEpitech/assetsGame/images/enemies/boss1.png')}}");
+    game.load.image('deathRay', "{{asset('assets/gameEpitech/assetsGame/images/weapons/enemies/bossWeapon1.png')}}");
+    //police spéciale (en bitMap)
+    game.load.bitmapFont('spacefont', "{{asset('assets/gameEpitech/assetsGame/police/desyrel.png')}}", "{{asset('assets/gameEpitech/assetsGame/police/desyrel.xml')}}");  
+}
+
+
+
+
+
+
+
+
+
+
+
+function create() {
+
+    //TERRAIN
+    //terrain : positionnement
+    battleField = game.add.tileSprite(0, 0, 800, 600, 'battleField');
+
+    //JOUEUR
+    //tirs joueur : physique, nb de tirs à l'écran, et positionnement tirs
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+    bullets.createMultiple(30, 'bullet');
+    bullets.setAll('anchor.x', 0.5);
+    bullets.setAll('anchor.y', 1);
+    bullets.setAll('outOfBoundsKill', true);
+    bullets.setAll('checkWorldBounds', true);
+    //joueur: positionnement arme
+    player = game.add.sprite(400, 550, 'weapon');
+    //joueur: vie
+    player.health = playerLife;
+    //
+    player.anchor.setTo(0.5, 0.5);    
+    //joueur : activation physique du jeu
+    game.physics.enable(player, Phaser.Physics.ARCADE);
+    //joueur : déplacements
+    player.body.maxVelocity.setTo(playerMaxSpeed, playerMaxSpeed);
+    player.body.drag.setTo(playerDrag, playerDrag);
+    //joueur : niveau de l'arme
+    player.weaponLevel = 1
+    
+    //effets joueur: suppression quand mort
+    player.events.onKilled.add(function(){
+        propulsion.kill();
+    });
+    //effets joueur: réactivation quand new game
+    player.events.onRevived.add(function(){
+        propulsion.start(false, 5000, 10);
+    });
+
+
+    //ENNEMIS 1
+    //ennemis1: création, nb max et positionnement
+    firstEnemies = game.add.group();
+    firstEnemies.enableBody = true;
+    firstEnemies.physicsBodyType = Phaser.Physics.ARCADE;
+    firstEnemies.createMultiple(30, 'first-enemy');
+    firstEnemies.setAll('anchor.x', 0.5);
+    firstEnemies.setAll('anchor.y', 0.5);
+    firstEnemies.setAll('scale.x', 0.5);
+    firstEnemies.setAll('scale.y', 0.5);
+    //ennemis1: orientation
+    firstEnemies.setAll('angle', 180);
+    firstEnemies.forEach(function(enemy){
+        //effets ennemis1
+        // addEnemyEmitterTrail(enemy);
+        //ennemis1: débuggage/précision collision
+        enemy.body.setSize(enemy.width * 3 / 4, enemy.height * 3 / 4);
+        //ennemis1: dégâts
+        enemy.damageAmount = 10*characterWeaknessEnemies1;
+        //ennemis1: suppression
+        // enemy.events.onKilled.add(function(){
+        //     enemy.trail.kill();
+        // });
+    });    
+    //ennemis1: lancement vague
+    game.time.events.add(1000, launchEnemies1);
+    
+
+    //ENNEMIS 2
+    //ennemis2 : tirs
+    secondEnemiesBullets = game.add.group();
+    secondEnemiesBullets.enableBody = true;
+    secondEnemiesBullets.physicsBodyType = Phaser.Physics.ARCADE;
+    secondEnemiesBullets.createMultiple(30, 'secondEnemiesBullet');
+    // secondEnemiesBullets.callAll('crop', null, {x: 200, y: 0, width: 90, height: 70});
+    //alpha= couleur
+    secondEnemiesBullets.setAll('alpha', 0.9);
+    secondEnemiesBullets.setAll('anchor.x', 0.5);
+    secondEnemiesBullets.setAll('anchor.y', 0.5);
+    secondEnemiesBullets.setAll('outOfBoundsKill', true);
+    secondEnemiesBullets.setAll('checkWorldBounds', true);
+    secondEnemiesBullets.forEach(function(enemy){
+        enemy.body.setSize(20, 20);
+    });
+    //ennemis2 : création, nb max, et positionnement
+    secondEnemies = game.add.group();
+    secondEnemies.enableBody = true;
+    secondEnemies.physicsBodyType = Phaser.Physics.ARCADE;
+    secondEnemies.createMultiple(2, 'second-enemy');
+    secondEnemies.setAll('anchor.x', 0.5);
+    secondEnemies.setAll('anchor.y', 0.5);
+    secondEnemies.setAll('scale.x', 0.5);
+    secondEnemies.setAll('scale.y', 0.5);
+    secondEnemies.setAll('angle', 180);
+    //ennemis2: dégâts
+    secondEnemies.forEach(function(enemy){
+        enemy.damageAmount = 42*characterWeaknessEnemies2;
+    });
+
+
+    //BOSS
+    //boss: création et positionnement
+    boss = game.add.sprite(0, 0, 'boss');
+    boss.exists = false;
+    boss.alive = false;
+    boss.anchor.setTo(0.5, 0.5);
+    //boss: dégâts
+    //!attention, ne pas dépasser un total de 50!!!
+    boss.damageAmount = 25*characterWeaknessBoss;
+    boss.angle = 0;
+    boss.scale.x = 0.6;
+    boss.scale.y = 0.6;
+    game.physics.enable(boss, Phaser.Physics.ARCADE);
+    boss.body.maxVelocity.setTo(100, 80);
+    boss.dying = false;
+    boss.finishOff = function() {
+        if (!boss.dying) {
+            boss.dying = true;
+            bossDeath.x = boss.x;
+            bossDeath.y = boss.y;
+            bossDeath.start(false, 1000, 50, 20);
+            //mort du boss après explosion
+            game.time.events.add(1000, function(){
+                var explosion = explosions.getFirstExists(false);
+                var beforeScaleX = explosions.scale.x;
+                var beforeScaleY = explosions.scale.y;
+                var beforeAlpha = explosions.alpha;
+                explosion.reset(boss.body.x + boss.body.halfWidth, boss.body.y + boss.body.halfHeight);
+                explosion.alpha = 0.4;
+                explosion.scale.x = 3;
+                explosion.scale.y = 3;
+                var animation = explosion.play('explosion', 30, false, true);
+                animation.onComplete.addOnce(function(){
+                    explosion.scale.x = beforeScaleX;
+                    explosion.scale.y = beforeScaleY;
+                    explosion.alpha = beforeAlpha;
+                });
+                boss.kill();
+                //malus vitesse ennemis accrus
+                if(firstEnemiesSpeed<600){
+                    firstEnemiesSpeed = firstEnemiesSpeed+50
+                }
+                battleFieldSpeed+=2;
+                //joueur : fin bonus d'arme mais amélioration vitesse tirs
+                player.weaponLevel = 1;
+                countVagues++;
+                vague= countVagues;
+                infosText.render();
+            
+                if(playerSpeedShoot>250){
+                    playerSpeedShoot = playerSpeedShoot-5;
+                }
+                // boosterBoss.kill();
+                boss.dying = false;
+                bossDeath.on = false;
+                //fréquence d'arrivée
+                bossLaunchTimer = game.time.events.add(game.rnd.integerInRange(bossSpacing, bossSpacing + 5000), launchBoss);
+            });
+            //reset des autres vagues ennemies
+            secondEnemiesSpacing = 5000;
+            firstEnemiesSpacing = 1000;
+            //bonus de vie
+            if(player.health<100){
+                player.health = player.health + 25;
+            }
+            playerLife.render();
+        }
+    };
+    //tirs boss: ajout tir gauche
+    function addRay(leftRight) {
+        //tirs boss: positionnement tir gauche
+        var ray = game.add.sprite(leftRight * boss.width * 0.75, 0, 'deathRay');
+        ray.alive = false;
+        ray.visible = false;
+        boss.addChild(ray);
+        //détermine le carré à prendre dans le stylesheet
+        ray.crop({x: 0, y: 0, width: 40, height: 40});
+        ray.anchor.x = 0.5;
+        ray.anchor.y = 0.5;
+        ray.scale.x = 2.5;
+        ray.damageAmount = boss.damageAmount;
+        game.physics.enable(ray, Phaser.Physics.ARCADE);
+        ray.body.setSize(ray.width / 5, ray.height / 4);
+        ray.update = function() {
+            this.alpha = game.rnd.realInRange(0.6, 1);
+        };
+        boss['ray' + (leftRight > 0 ? 'Right' : 'Left')] = ray;
+    }
+    addRay(1);
+    addRay(-1);
+    //tirs boss: seconde texture
+    var ship = game.add.sprite(0, 0, 'boss');
+    ship.anchor = {x: 0.5, y: 0.5};
+    boss.addChild(ship);
+    //tirs boss: comportement arme
+    boss.fire = function() {
+        if (game.time.now > bossBulletTimer) {
+            var raySpacing = 3000;
+            var chargeTime = 1500;
+            var rayTime = 1500;
+            if(playerIsDead==false){
+                //audio tirs boss 
+                audioShootBoss.pause();
+                audioShootBoss.currentTime=0;
+                audioShootBoss.play();
+                //          
+            }     
+            function chargeAndShoot(side) {
+                ray = boss['ray' + side];
+                ray.name = side
+                ray.revive();
+                ray.y = 80;
+                ray.alpha = 0;
+                ray.scale.y = 13;
+                game.add.tween(ray).to({alpha: 1}, chargeTime, Phaser.Easing.Linear.In, true).onComplete.add(function(ray){
+                    ray.scale.y = 150;
+                    game.add.tween(ray).to({y: -1500}, rayTime, Phaser.Easing.Linear.In, true).onComplete.add(function(ray){
+                        ray.kill();
+                    });
+                });
+            }
+            chargeAndShoot('Right');
+            chargeAndShoot('Left');
+            //tirs boss: cadence de tirs
+            bossBulletTimer = game.time.now + raySpacing;
+        }
+    };
+    //boss : déplacements et comportement
+    boss.update = function() {
+        if (!boss.alive) return;
+        boss.rayLeft.update();
+        boss.rayRight.update();
+        if (boss.y > 140) {
+          boss.body.acceleration.y = -50;
+        }
+        if (boss.y < 140) {
+          boss.body.acceleration.y = 50;
+        }
+        if (boss.x > player.x + 50) {
+          boss.body.acceleration.x = -50;
+        } else if (boss.x < player.x - 50) {
+          boss.body.acceleration.x = 50;
+        } else {
+          boss.body.acceleration.x = 0;
+        }
+        //boss: mouvements de rotation
+        var rotation = boss.body.velocity.x / playerMaxSpeed;
+        boss.scale.x = 0.6 - Math.abs(rotation) / 3;
+        boss.angle = 180 - rotation * 20;
+        // boosterBoss.x = boss.x + -5 * rotation;
+        // boosterBoss.y = boss.y + 10 * Math.abs(rotation) - boss.height / 2;
+        //boss: tir si le joueur est dans sa ligne de mire
+        var angleToPlayer = game.math.radToDeg(game.physics.arcade.angleBetween(boss, player)) - 90;
+        var anglePointing = 180 - Math.abs(boss.angle);
+        if (anglePointing - angleToPlayer < 18) {
+            boss.fire();
+        }
+    }
+    //effets boss
+    // boosterBoss = game.add.emitter(boss.body.x, boss.body.y - boss.height / 2);
+    // boosterBoss.width = 0;
+    // boosterBoss.makeParticles('explosion');
+    // boosterBoss.forEach(function(p){
+    //   p.crop({x: 120, y: 0, width: 45, height: 50});
+    //   //traits gauche et droite
+    //   p.anchor.x = game.rnd.pick([1,-1]) * 0.95 + 0.5;
+    //   p.anchor.y = 0.75;
+    // });
+    // boosterBoss.setXSpeed(0, 0);
+    // boosterBoss.setRotation(0,0);
+    // boosterBoss.setYSpeed(-30, -50);
+    // boosterBoss.gravity = 0;
+    // boosterBoss.setAlpha(1, 0.1, 400);
+    // boosterBoss.setScale(0.3, 0, 0.7, 0, 5000, Phaser.Easing.Quadratic.Out);
+    boss.bringToTop();
+
+
+    //commandes: activation clavier & touche de tir
+    commandes = game.input.keyboard.createCursorKeys();
+    fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    //effets joueur : activation et comportement propulsion
+    propulsion = game.add.emitter(player.x, player.y + 10, 400);
+    propulsion.width = 65;
+    propulsion.makeParticles('bullet');
+    propulsion.setXSpeed(30, -30);
+    propulsion.setYSpeed(200, 180);
+    propulsion.setRotation(50,-50);
+    propulsion.setAlpha(1, 0.01, 800);
+    propulsion.setScale(0.05, 0.4, 0.05, 0.4, 2000, Phaser.Easing.Quintic.Out);
+    propulsion.start(false, 5000, 10); 
+
+    //effets communs : mort (ou explosions)
+    explosions = game.add.group();
+    explosions.enableBody = true;
+    explosions.physicsBodyType = Phaser.Physics.ARCADE;
+    explosions.createMultiple(30, 'explosion');
+    explosions.setAll('anchor.x', 0.5);
+    explosions.setAll('anchor.y', 0.5);
+    explosions.forEach( function(explosion) {
+        explosion.animations.add('explosion');
+    });
+
+    //effets joueur : mort (ou explosion) puissance 2
+    playerDeath = game.add.emitter(player.x, player.y);
+    playerDeath.width = 50;
+    playerDeath.height = 50;
+    playerDeath.makeParticles('explosion', [0,1,2,3,4,5,6,7], 10);
+    playerDeath.setAlpha(0.9, 0, 800);
+    playerDeath.setScale(0.1, 0.6, 0.1, 0.6, 1000, Phaser.Easing.Quintic.Out);
+
+    //effets boss: mort (ou explosion) puissance 4
+    bossDeath = game.add.emitter(boss.x, boss.y);
+    bossDeath.width = boss.width / 2;
+    bossDeath.height = boss.height / 2;
+    bossDeath.makeParticles('explosion', [0,1,2,3,4,5,6,7], 20);
+    bossDeath.setAlpha(0.9, 0, 900);
+    bossDeath.setScale(0.3, 1.0, 0.3, 1.0, 1000, Phaser.Easing.Quintic.Out);
+
+
+    //interface : barre de vie
+    playerLife = game.add.bitmapText(game.world.width - 200, 10, 'spacefont', '' + player.health +'%', 30);    
+    playerLife.render = function () {
+        playerLife.text = 'Groove: ' + Math.max(player.health, 0) +'%';
+    };
+    playerLife.render();
+
+    //interface : score
+    scoreText = game.add.bitmapText(10, 10, 'spacefont', '', 30);
+    scoreText.render = function () {
+        scoreText.text = 'Score: ' + score;
+    };
+    scoreText.render();
+
+    //interface : infos
+    infosText = game.add.bitmapText(300, 10, 'spacefont', '', 30);
+    infosText.render = function () {
+        infosText.text = 'Vague: ' + vague;
+    };
+    infosText.render();
+    
+
+    //interface : game over
+    gameOver = game.add.bitmapText(game.world.centerX, game.world.centerY, 'spacefont', "T'es MORT !", 110);
+    gameOver.x = gameOver.x - gameOver.textWidth / 2;
+    gameOver.y = gameOver.y - gameOver.textHeight / 3;
+    gameOver.visible = false;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function update() {
+
+
+    //terrain : défilement
+    battleField.tilePosition.y += battleFieldSpeed;
+
+
+    if(controlChoices=="clavier"){
+        //déplacements joueur : comportement au clavier et par défaut
+        player.body.acceleration.x = 0;
+        if (commandes.left.isDown){
+            player.body.acceleration.x = -playerAcceleration;
+        }
+        else if (commandes.right.isDown){
+                player.body.acceleration.x = playerAcceleration;
+        }
+    }
+   
+    //déplacements joueur : empêcher la sortie de piste
+    if (player.x > game.width - 50) {
+        player.x = game.width - 50;
+        player.body.acceleration.x = 0;
+    }
+    if (player.x < 50) {
+        player.x = 50;
+        player.body.acceleration.x = 0;
+    }
+
+
+    //tirs joueur : conditions de tir
+    if (player.alive && (fireButton.isDown || game.input.activePointer.isDown)) {
+        fireBullet();
+    }
+
+
+    if(controlChoices=="souris"){
+        //déplacements joueur : comportement à la souris
+        if (game.input.x < game.width - 20 &&
+            game.input.x > 20 &&
+            game.input.y > 20 &&
+            game.input.y < game.height - 20) {
+            var minDist = 200;
+            var dist = game.input.x - player.x;
+            player.body.velocity.x = playerMaxSpeed * game.math.clamp(dist / minDist, -1, 1);
+        }
+    }
+
+
+    //effets joueur :  rotation de l'arme au déplacement
+    rotation = player.body.velocity.x / playerMaxSpeed;
+    player.scale.x = 1 - Math.abs(rotation) / 5;
+
+
+    //déplacement joueur :  angle de visée
+    player.angle = rotation * 30;
+
+
+    //effets joueur: propulsion derrière l'arme
+    propulsion.x = player.x;
+
+
+
+    //joueur : verif si collisions ou cible atteinte
+    game.physics.arcade.overlap(player, firstEnemies, shipCollide, null, this);
+    game.physics.arcade.overlap(firstEnemies, bullets, hitEnemy, null, this);
+    game.physics.arcade.overlap(player, secondEnemies, shipCollide, null, this);
+    game.physics.arcade.overlap(secondEnemies, bullets, hitEnemy, null, this);
+    game.physics.arcade.overlap(boss, bullets, hitEnemy, bossHitTest, this);
+
+    //ennemis : verif si collision ou joueur atteint
+    game.physics.arcade.overlap(player, boss.rayLeft, enemyHitsPlayer, null, this);
+    game.physics.arcade.overlap(player, boss.rayRight, enemyHitsPlayer, null, this);
+    game.physics.arcade.overlap(secondEnemiesBullets, player, enemyHitsPlayer, null, this);
+
+
+    //conditions de game over et relance
+    if (! player.alive && gameOver.visible === false) {
+        playerIsDead = true;
+
+        //envoi score BDD
+        var user = sessionStorage.getItem('user');
+        var request = new XMLHttpRequest();
+        var url = "../controllerBDD.php";
+        request.onreadystatechange = function () {
+            if (request.readyState === 4 && request.status === 200) {
+                console.log("ajax passé");
+            }
+        };
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+        let data = "reason="+"saveScore"+"&user="+user+"&game="+"Epitech"+"&weapon="+character+"&controls="+controlChoices+"&score="+score;
+        request.send(data);
+        
+        //effets audio mort
+        audioShoot2.pause();
+        audioShoot2.currentTime=0;
+        audioShoot3.pause();
+        audioShoot3.currentTime=0;
+        audioShootBoss.pause();
+        audioShootBoss.currentTime=0;
+        audioMusic.pause();
+        audioMusic.currentTime = 0;
+        audioAmbiance.pause();
+        audioAmbiance.currentTime = 0;
+        audioMusicDeath.pause();
+        audioMusicDeath.currentTime = 0;
+        audioDeath.play();
+        setTimeout(function() {
+            console.log()
+            //temps de la musique après 10000millisecondes (=10 secondes)
+            // if(audioMusicDeath.duration==226.04075 && playerIsDead==true){
+            if(playerIsDead==true){
+                audioMusicDeath.play();
+            }
+        }, 4000);
+        //affichage game over
+        gameOver.visible = true;
+        gameOver.alpha = 0;
+        var fadeInGameOver = game.add.tween(gameOver);
+        fadeInGameOver.to({alpha: 1}, 1000, Phaser.Easing.Quintic.Out);
+        fadeInGameOver.onComplete.add(setResetHandlers);
+        fadeInGameOver.start();
+        function setResetHandlers() {
+            //  The "click to restart" handler
+            tapRestart = game.input.onTap.addOnce(_restart,this);
+            spaceRestart = fireButton.onDown.addOnce(_restart,this);
+            function _restart() {
+                tapRestart.detach();
+                spaceRestart.detach();
+                restart();
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+function render() {
+
+    // for (var i = 0; i < firstEnemies.length; i++)
+    // {
+    //     game.debug.body(firstEnemies.children[i]);
+    // }
+    // game.debug.body(player);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+//fonction amélioration de l'arme
+function fireBullet() 
+{
+    switch (player.weaponLevel) {
+        case 1:
+            if (game.time.now > bulletTimer)
+            {
+                var BULLET_SPEED = playerBulletSpeed;
+                var BULLET_SPACING = playerSpeedShoot;
+                var bullet = bullets.getFirstExists(false);
+                if (bullet)
+                {
+                    //audio joueur tirs
+                    audioShoot3.play();
+                    //        
+                    var bulletOffset = 20 * Math.sin(game.math.degToRad(player.angle));
+                    bullet.reset(player.x + bulletOffset, player.y);
+                    bullet.angle = player.angle;
+                    game.physics.arcade.velocityFromAngle(bullet.angle - 90, BULLET_SPEED, bullet.body.velocity);
+                    bullet.body.velocity.x += player.body.velocity.x;
+                    bulletTimer = game.time.now + BULLET_SPACING;
+                }
+            }
+            break;
+        case 2:
+            if (game.time.now > bulletTimer) {
+                var BULLET_SPEED = playerBulletSpeed;
+                var BULLET_SPACING = playerSpeedShoot;
+                for (var i = 0; i < 3; i++) {
+                    var bullet = bullets.getFirstExists(false);
+                    if (bullet) {
+                        //audio joueur tirs
+                        audioShoot3.play();
+                        //        
+                        var bulletOffset = 20 * Math.sin(game.math.degToRad(player.angle));
+                        bullet.reset(player.x + bulletOffset, player.y);
+                        //ajout des tirs en diagonale
+                        var spreadAngle;
+                        if (i === 0) spreadAngle = -20;
+                        if (i === 1) spreadAngle = 0;
+                        if (i === 2) spreadAngle = 20;
+                        bullet.angle = player.angle + spreadAngle;
+                        game.physics.arcade.velocityFromAngle(spreadAngle - 90, BULLET_SPEED, bullet.body.velocity);
+                        bullet.body.velocity.x += player.body.velocity.x;
+                    }
+                    bulletTimer = game.time.now + BULLET_SPACING;
+                }
+            }
+    }
+}
+
+
+
+function launchEnemies1() 
+{
+    //ennemis1 : vitesse de déplacement
+    var ENEMY_SPEED = firstEnemiesSpeed;
+
+    var enemy = firstEnemies.getFirstExists(false);
+    if (enemy) {
+        enemy.reset(game.rnd.integerInRange(0, game.width), -20);
+        //ennemis1 : aamplitude déplacements latéraux
+        enemy.body.velocity.x = game.rnd.integerInRange(-100, 100);
+        enemy.body.velocity.y = ENEMY_SPEED;
+        enemy.body.drag.x = 100;
+        //ennemis1 : relance effets propulsion
+        // enemy.trail.start(false, 800, 1);
+
+        enemy.update = function(){
+            //ennemis1 : positionnement de l'image
+            enemy.angle = 0 - game.math.radToDeg(Math.atan2(enemy.body.velocity.x, enemy.body.velocity.y));
+            //ennemis1 : suppression
+            // enemy.trail.x = enemy.x;
+            // enemy.trail.y = enemy.y -10;
+            if (enemy.y > game.height + 200) {
+                enemy.kill();
+            }  
+        }
+    }
+    //ennemis1 : fréquence d'envoie et positionnement aléatoire 
+    firstEnemyLaunchTimer = game.time.events.add(game.rnd.integerInRange(firstEnemiesSpacing, firstEnemiesSpacing + 1000), launchEnemies1);
+}
+
+
+
+function launchEnemies2() {
+    //ennemis2 : fréquence, vitesse et nb par vagues
+    var startingX = game.rnd.integerInRange(100, game.width - 100);
+    var verticalSpeed = 100;
+    var spread = 60;
+    var frequency = 70;
+    var verticalSpacing = 70;
+    var numEnemiesInWave = 5;
+    //ennemis2 : positionnement et comportement
+    for (var i =0; i < numEnemiesInWave; i++) {
+        var enemy = secondEnemies.getFirstExists(false);
+        if (enemy) {
+            enemy.startingX = startingX;
+            enemy.reset(game.width / 2, -verticalSpacing * i);
+            enemy.body.velocity.y = verticalSpeed;
+
+            //tirs ennemis2: vitesse et délais
+            var bulletSpeed = 400;
+            var firingDelay = 2000;
+            enemy.bullets = 1;
+            enemy.lastShot = 0;
+
+            enemy.update = function(){
+              //ennemis2 : mouvements, rotations, et comportement
+              this.body.x = this.startingX + Math.sin((this.y) / frequency) * spread;
+              rotation = Math.cos((this.y + 60) / frequency)
+              this.scale.x = 0.5 - Math.abs(rotation) / 8;
+              this.angle = 0 - rotation * 2;
+
+            //tirs ennemis2 : comportement et direction
+            enemyBullet = secondEnemiesBullets.getFirstExists(false);
+            if (enemyBullet &&
+                this.alive &&
+                this.bullets &&
+                this.y > game.width / 8 &&
+                game.time.now > firingDelay + this.lastShot) {
+                    if(playerIsDead==false){
+                        //audio tirs ennemie 
+                        audioShoot2.pause();
+                        audioShoot2.currentTime=0;
+                        audioShoot2.play();
+                        //   
+                    }     
+                    this.lastShot = game.time.now;
+                    this.bullets--;
+                    enemyBullet.reset(this.x, this.y + this.height / 2);
+                    enemyBullet.damageAmount = this.damageAmount;
+                    var angle = game.physics.arcade.moveToObject(enemyBullet, player, bulletSpeed);
+                    enemyBullet.angle = game.math.radToDeg(angle);
+                }
+                //ennemis2 : suppression si hors zone
+                if (this.y > game.height + 200) {
+                    this.kill();
+                    this.y = -20;
+                }
+            };
+        }
+    }
+    //ennemis2 : fréquence d'envoie et positionnement aléatoire 
+    secondEnemiesLaunchTimer = game.time.events.add(game.rnd.integerInRange(secondEnemiesSpacing, secondEnemiesSpacing + 1000), launchEnemies2);
+
+}
+
+
+//boss: lancement
+function launchBoss() {
+    //joueur : bonus d'arme
+    if (score > 5000 && player.weaponLevel < 2) {
+    //PROVISOIRE
+    // if (score > 10 && player.weaponLevel < 2) {
+      player.weaponLevel = 2;
+      vague= "boss !";
+      infosText.render();
+    }
+    boss.reset(game.width / 2, -boss.height);
+    // boosterBoss.start(false, 1000, 10);
+    //boss: nb de vie
+    //!attention, trop de points de vie ou trop peu fait bugguer sa mort en fonction des dommages qu'on lui a mit !!!
+    boss.health = 501;
+    bossBulletTimer = game.time.now + 5000;
+}
+
+
+
+//effets propulsion ennemis
+function addEnemyEmitterTrail(enemy) {
+    var enemyTrail = game.add.emitter(enemy.x, player.y - 10, 100);
+    enemyTrail.width = 10;
+    enemyTrail.makeParticles('explosion', [1,2,3,4,5]);
+    enemyTrail.setXSpeed(20, -20);
+    enemyTrail.setRotation(50,-50);
+    enemyTrail.setAlpha(0.4, 0, 800);
+    enemyTrail.setScale(0.01, 0.1, 0.01, 0.1, 1000, Phaser.Easing.Quintic.Out);
+    enemy.trail = enemyTrail;
+}
+
+
+
+//effets mort
+function shipCollide(player, enemy) {
+    enemy.kill();
+
+    player.damage(enemy.damageAmount);
+    //audio joueur touche
+    audioLifeDown.pause();
+    audioLifeDown.currentTime=0;
+    audioLifeDown.play();
+    //        
+    playerLife.render();
+
+    if (player.alive) {
+        var explosion = explosions.getFirstExists(false);
+        explosion.reset(player.body.x + player.body.halfWidth, player.body.y + player.body.halfHeight);
+        explosion.alpha = 0.7;
+        explosion.play('explosion', 30, false, true);
+    } else {
+        playerDeath.x = player.x;
+        playerDeath.y = player.y;
+        playerDeath.start(false, 1000, 10, 10);
+    }
+}
+
+
+//joueur : quand un ennemi est atteint
+function hitEnemy(enemy, bullet) {
+    //effets joueur : si impact sur l'ennemi
+    var explosion = explosions.getFirstExists(false);
+    explosion.reset(bullet.body.x + bullet.body.halfWidth, bullet.body.y + bullet.body.halfHeight);
+    explosion.body.velocity.y = enemy.body.velocity.y;
+    explosion.alpha = 0.7;
+    explosion.play('explosion', 30, false, true);
+    if (enemy.finishOff && enemy.health < 5) {
+        enemy.finishOff();
+    } else {
+        enemy.damage(enemy.damageAmount);
+        //audio ennemi atteint
+        audioHitEnnemie.pause();
+        audioHitEnnemie.currentTime=0;
+        audioHitEnnemie.play();
+    }
+    bullet.kill();
+
+    //score: cible détruite
+    score += enemy.damageAmount * 10;
+    scoreText.render();
+
+    //joueur : variation de la difficulté...
+    //...par rapport aux vagues
+    firstEnemiesSpacing *= 0.9;
+    if (!secondEnemiesLaunched && score > 1000) {
+        secondEnemiesLaunched = true;
+        launchEnemies2();
+        firstEnemiesSpacing *= 2;
+    }
+    //...par rapport au boss
+    if (!bossLaunched && score > 5000) {
+    //PROVISOIRE
+    // if (!bossLaunched && score > 10) {
+        firstEnemiesSpacing = 5000;
+        secondEnemiesSpacing = 12000;
+        //effets boss : dramaturgie de l'arrivée
+        game.time.events.add(2000, function(){
+          bossLaunched = true;
+          launchBoss();
+        });
+    }
+
+}
+
+
+
+//boss : amélioration de la précision des impacts
+function bossHitTest(boss, bullet) {
+    if ((bullet.x > boss.x + boss.width / 5 &&
+        bullet.y > boss.y) ||
+        (bullet.x < boss.x - boss.width / 5 &&
+        bullet.y > boss.y)) {
+      return false;
+    } else {
+      return true;
+    }
+}
+
+
+
+//joueur : impact tirs ennemis
+function enemyHitsPlayer (player, bullet) {
+
+    bullet.kill();
+    player.damage(bullet.damageAmount);
+    //audio joueur touche
+    audioLifeDown.pause();
+    audioLifeDown.currentTime=0;
+    audioLifeDown.play();
+    //            
+    playerLife.render()
+    if (player.alive) {
+        var explosion = explosions.getFirstExists(false);
+        explosion.reset(player.body.x + player.body.halfWidth, player.body.y + player.body.halfHeight);
+        explosion.alpha = 0.7;
+        explosion.play('explosion', 30, false, true);
+    } else {
+        playerDeath.x = player.x;
+        playerDeath.y = player.y;
+        playerDeath.start(false, 1000, 10, 10);
+    }
+}
+
+
+
+
+function restart () {
+
+    //relance ambiance
+    audioMusic.play();
+    audioAmbiance.play();
+    playerIsDead = false;
+    audioDeath.pause();
+    audioDeath.currentTime=0;
+    audioMusicDeath.pause();
+    audioMusicDeath.currentTime=0;
+    battleFieldSpeed = 4;
+
+    //reset ennemies
+    firstEnemies.callAll('kill');
+    game.time.events.remove(firstEnemyLaunchTimer);
+    game.time.events.add(1000, launchEnemies1);
+    secondEnemies.callAll('kill');
+    secondEnemiesBullets.callAll('kill');
+    game.time.events.remove(secondEnemiesLaunchTimer);
+    boss.kill();
+    //joueur : fin bonus d'arme
+    player.weaponLevel = 1;
+    // boosterBoss.kill();
+    game.time.events.remove(bossLaunchTimer);
+    secondEnemies.callAll('kill');
+    game.time.events.remove(secondEnemiesLaunchTimer);
+
+    //reset arme
+    player.weaponLevel = 1;
+    playerSpeedShoot = characterSpeedShoot;
+
+    //reset interface
+    player.revive();
+    player.health = characterLife;
+    playerLife.render();
+    score = 0;
+    scoreText.render();
+    countVagues=1;
+    vague=countVagues;
+    infosText.render();
+
+    //reset no game over
+    gameOver.visible = false;
+
+    //reset difficulté
+    firstEnemiesSpacing = 500;
+    secondEnemiesLaunched = false;
+    bossLaunched = false;
+    firstEnemiesSpeed = 300;
+
+}
+
+
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+    window.addEventListener('mouseup', e => {
+        audioShoot3.pause();
+        audioShoot3.currentTime=0;
+    });
+});
+
+
+</script>
