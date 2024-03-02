@@ -74,7 +74,7 @@ h1{
 }
 .buttonPerso:hover, .buttonPerso:active {
     background-color: burlywood;
-    color: black;
+    color: black !important;
 }
 
 

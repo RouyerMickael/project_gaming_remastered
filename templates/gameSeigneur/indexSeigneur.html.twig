@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{# <!DOCTYPE html>
 <html>
 <head>
 <meta name="description" content="Phaser.js game demo" />
@@ -7,8 +7,14 @@
   <link rel="stylesheet" href="../assets/css/htmlGaming.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <script src="http://cdnjs.cloudflare.com/ajax/libs/phaser/2.0.5/phaser.min.js" type="text/javascript"></script>
-</head>
-<body class="game">
+</head> #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="game">
+
   <h1>HTML5 GAMING - Seigneur des Anneaux</h1>
   <nav><a class="nav-link buttonPerso" href="/">Retour au menu principal</a></nav>
   <audio id="audioMusic" class="audio" loop controls src="{{asset('assets/gameSeigneur/assetsGame/audios/musics/victory.mp3')}}"></audio>
@@ -26,16 +32,17 @@
 
   <div class="interface">
     <div class="col">
-    <div class="row">
-      <div id="imagePlayer" class="col-2"></div>
-      <div id="infosCharacter" class="col-7 interfaceColumn"></div>
-      <div class="col-3">
-        <img alt="player" height="120" src="{{asset('assets/gameSeigneur/assetsGame/images/players/orcsOrigine.png')}}">
+      <div class="row">
+        <div id="imagePlayer" class="col-2"></div>
+        <div id="infosCharacter" class="col-7 interfaceColumn"></div>
+        <div class="col-3">
+          <img alt="player" height="120" src="{{asset('assets/gameSeigneur/assetsGame/images/players/orcsOrigine.png')}}">
+        </div>
       </div>
-    </div>
     </div>
   </div>
   {# <script src="gameSeigneur.js" type="text/javascript"></script> #}
   {% include "gameSeigneur/gameSeigneur.html.twig" %}
-</body>
-</html>
+</div>
+
+{% endblock %}
