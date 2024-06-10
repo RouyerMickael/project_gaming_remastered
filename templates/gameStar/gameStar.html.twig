@@ -1,5 +1,10 @@
 <script>
 
+
+//régulation de la vitesse cause fréquence du moniteur
+deltaDivisor = sessionStorage.getItem("deltaDivisor");
+
+
 //cinema GIF
 let cinemaGif = document.getElementById('cinema');
 cinemaGif.hidden=true;
@@ -105,11 +110,11 @@ switch (character) {
 // }
 
 if(character=="xwing"){
-    alert("Ce jeu se joue au clavier : \ndéplacements = flèches de direction ; touche de tir = barre d'espace ; touche de pouvoir = W.\n\nVotre vaisseau a pour pouvoir de ne pas recevoir de dégâts pendant une durée limitée. \n\nAttention, votre pouvoir ne peut être utilisé qu'une seule fois par partie, utilisez le bien !")
+    alert("Ce jeu se joue au clavier : \ndeplacements = flèches de direction ; touche de tir = barre d'espace ; touche de pouvoir = W.\n\nVotre vaisseau a pour pouvoir de ne pas recevoir de dégâts pendant une durée limitée. \n\nAttention, votre pouvoir ne peut être utilisé qu'une seule fois par partie, utilisez le bien !")
 } else if (character=="ywing"){
-    alert("Ce jeu se joue au clavier : \ndéplacements = flèches de direction ; touche de tir = barre d'espace ; touche de pouvoir = W.\n\nVotre vaisseau a pour pouvoir de lâcher une bombe qui détruit tout autour de lui, permettant de repartir de 0 sans perdre son score. \n\nAttention, votre pouvoir ne peut être utilisé qu'une seule fois par partie, utilisez le bien !")
+    alert("Ce jeu se joue au clavier : \ndeplacements = flèches de direction ; touche de tir = barre d'espace ; touche de pouvoir = W.\n\nVotre vaisseau a pour pouvoir de lâcher une bombe qui détruit tout autour de lui, permettant de repartir de 0 sans perdre son score. \n\nAttention, votre pouvoir ne peut être utilisé qu'une seule fois par partie, utilisez le bien !")
 } else if (character=="awing"){
-    alert("Ce jeu se joue au clavier : \ndéplacements = flèches de direction ; touche de tir = barre d'espace ; touche de pouvoir = W.\n\nVotre vaisseau a pour pouvoir d'accélérer considérablement sa fréquence de tirs pendant une durée limitée. \n\nAttention, votre pouvoir ne peut être utilisé qu'une seule fois par partie, utilisez le bien !")
+    alert("Ce jeu se joue au clavier : \ndeplacements = flèches de direction ; touche de tir = barre d'espace ; touche de pouvoir = W.\n\nVotre vaisseau a pour pouvoir d'accélérer considérablement sa fréquence de tirs pendant une durée limitée. \n\nAttention, votre pouvoir ne peut être utilisé qu'une seule fois par partie, utilisez le bien !")
 }
 let controlChoices = "clavier"
 
@@ -256,7 +261,7 @@ function create() {
     player.anchor.setTo(0.5, 0.5);    
     //joueur : activation physique du jeu
     game.physics.enable(player, Phaser.Physics.ARCADE);
-    //joueur : déplacements
+    //joueur : deplacements
     player.body.maxVelocity.setTo(playerMaxSpeed, playerMaxSpeed);
     player.body.drag.setTo(playerDrag, playerDrag);
     //joueur : niveau de l'arme
@@ -465,7 +470,7 @@ function create() {
             bossBulletTimer = game.time.now + raySpacing;
         }
     };
-    //boss : déplacements et comportement
+    //boss : deplacements et comportement
     boss.update = function() {
         if (!boss.alive) return;
         boss.rayLeft.update();
@@ -608,11 +613,11 @@ function update() {
 
 
     //terrain : défilement
-    battleField.tilePosition.y += (4 * fieldSpeedMultiplicator);
+    battleField.tilePosition.y += (4 * fieldSpeedMultiplicator)/deltaDivisor;
 
 
     if(controlChoices=="clavier"){
-        //déplacements joueur : comportement au clavier et par défaut
+        //deplacements joueur : comportement au clavier et par défaut
         player.body.acceleration.x = 0;
         if (commandes.left.isDown){
             player.body.acceleration.x = -playerAcceleration;
@@ -621,15 +626,15 @@ function update() {
             player.body.acceleration.x = playerAcceleration;
         }
         if (commandes.up.isDown){
-            player.y = player.y - 3;
+            player.y = player.y - (3/deltaDivisor);
         }
         else if (commandes.down.isDown)
         {
-            player.y = player.y + 5;
+            player.y = player.y + (5/deltaDivisor);
         }
     }
    
-    //déplacements joueur : empêcher la sortie de piste
+    //deplacements joueur : empêcher la sortie de piste
     if (player.x > game.width - 50) {
         player.x = game.width - 50;
         player.body.acceleration.x = 0;
@@ -662,7 +667,7 @@ function update() {
 
 
     if(controlChoices=="souris"){
-        //déplacements joueur : comportement à la souris
+        //deplacements joueur : comportement à la souris
         if (game.input.x < game.width - 20 &&
             game.input.x > 20 &&
             game.input.y > 20 &&
@@ -861,7 +866,7 @@ function launchEnemies1()
     var enemy = firstEnemies.getFirstExists(false);
     if (enemy) {
         enemy.reset(game.rnd.integerInRange(0, game.width), -20);
-        //ennemis1 : aamplitude déplacements latéraux
+        //ennemis1 : aamplitude deplacements latéraux
         enemy.body.velocity.x = game.rnd.integerInRange(-500, 500);
         enemy.body.velocity.y = ENEMY_SPEED;
         enemy.body.drag.x = 100;

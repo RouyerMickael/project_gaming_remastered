@@ -1,5 +1,8 @@
 <script>
 
+//régulation de la vitesse cause fréquence du moniteur
+deltaDivisor = sessionStorage.getItem("deltaDivisor");
+
 //audio menu
 // let audioMusicMenu = document.getElementById('audioMusicMenu');
 // audioMusicMenu.play();
@@ -523,7 +526,9 @@ function update() {
 
 
     //terrain : défilement
-    battleField.tilePosition.y += battleFieldSpeed;
+    //battleField.tilePosition.y += battleFieldSpeed;
+    battleField.tilePosition.y += battleFieldSpeed/deltaDivisor;
+
 
 
     if(controlChoices=="clavier"){

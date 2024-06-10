@@ -1,4 +1,29 @@
 
+//calcul du Delta entre la vitesse du jeu et la fréquence du moniteur
+//source: https://chriscourses.com/blog/standardize-your-javascript-games-framerate-for-different-monitors
+let index = 0
+let frames = 0
+let previousFrame = 0
+let newFrame = 0
+let delta = 0
+let deltaDivisor = 0
+let fpsDesired = 60
+let fpsIncrements = 0
+function animate() {
+    window.requestAnimationFrame(animate)
+    frames++
+}
+animate()
+setInterval(() => {
+    index++
+    delta = frames-previousFrame
+    deltaDivisor =  delta / fpsDesired
+    sessionStorage.setItem("deltaDivisor",deltaDivisor);
+    previousFrame = frames
+    }, 
+    1000
+)
+
 
 let pseudoChoosen = true;
 let gameChoosen = false;
