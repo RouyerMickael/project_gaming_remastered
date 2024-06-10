@@ -65,4 +65,4 @@ TOUS
 
 
 FAIT:
-Tous-> correction des problèmes de vitesse de défilement/déplacement dûes à la vitesse de certians moniteurs (exemple ordis portables)
+Tous-> correction des problèmes de vitesse de défilement/déplacement dûes au taux de rafraichissement de certians moniteurs (exemple ordis portables)
