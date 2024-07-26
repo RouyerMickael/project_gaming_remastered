@@ -4,6 +4,15 @@
 
 {% block body %}
 
+
+    <a class="text-light text-decoration-none hoverBold" href="{{ path('user_logout') }}">
+        <span>
+            <i class="fas fa-door-open"></i>
+            Déco.
+        </span>
+    </a>
+
+
     <div class="container">
         <h1 class="titreIndex">
             HTML5 GAMING REMASTERED
@@ -43,7 +52,7 @@
     </div>
 
     <script>
-        {% include "index/index.js" %}
+        {% include "home/_scriptsHome.js" %}
     </script>
 
 {% endblock %}

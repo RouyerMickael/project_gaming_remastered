@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class EpitechController extends AbstractController
 {
     /**
-     * @Route("/gameEpitech", name="epitechIndex")
+     * @Route("/gameEpitech", name="epitechMenu")
      */
-    public function swIndex(): Response
+    public function epitechMenu(): Response
     {
-        return $this->render('gameEpitech/indexEpitech.html.twig', [
+        return $this->render('gameEpitech/game/roomEpitech.html.twig', [
             'controller_name' => 'EpitechController',
         ]);
     }

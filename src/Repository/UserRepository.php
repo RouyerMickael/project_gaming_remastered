@@ -19,10 +19,13 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
+
+    //ATTENTION, certaines méthodes qui suivent sont utilisés par des composants de Symfony nécessaires à la connexion de l'User
 
     public function add(User $entity, bool $flush = false): void
     {

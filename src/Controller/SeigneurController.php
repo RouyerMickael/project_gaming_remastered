@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class SeigneurController extends AbstractController
 {
     /**
-     * @Route("/gameSeigneur", name="seigneurIndex")
+     * @Route("/gameSeigneur", name="seigneurMenu")
      */
-    public function seigneurIndex(): Response
+    public function seigneurMenu(): Response
     {
-        return $this->render('gameSeigneur/indexSeigneur.html.twig', [
+        return $this->render('gameSeigneur/game/roomSeigneur.html.twig', [
             'controller_name' => 'SeigneurController',
         ]);
     }

@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class StarWarsController extends AbstractController
 {
     /**
-     * @Route("/gameStar", name="swIndex")
+     * @Route("/gameStar", name="starMenu")
      */
-    public function swIndex(): Response
+    public function starMenu(): Response
     {
-        return $this->render('gameStar/indexStar.html.twig', [
+        return $this->render('gameStar/game/roomStar.html.twig', [
             'controller_name' => 'StarWarsController',
         ]);
     }
