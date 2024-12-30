@@ -3,9 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 //ATTENTION, certains champs et méthodes sont indispensables (même si vides) car utilisés par UserInterface (nécessaire à la connexion des utilisateurs)
 
@@ -36,6 +41,39 @@ class User implements UserInterface
      * @ORM\Column(type="string", nullable="true")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Score::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $scores;
+
+    /**
+     * @var \DateTime $created
+     * 
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+    */
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+    */
+    private $updated;
+
+
+
+    public function __construct()
+    {
+        $this->scores = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->email;
+    }
 
     public function getId(): ?int
     {
@@ -125,4 +163,45 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    /**
+     * @return Collection<int, Score>
+     */
+    public function getScores(): Collection
+    {
+        return $this->scores;
+    }
+
+    public function addScore(Score $score): self
+    {
+        if (!$this->scores->contains($score)) {
+            $this->scores[] = $score;
+            $score->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScore(Score $score): self
+    {
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getUser() === $this) {
+                $score->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
 }

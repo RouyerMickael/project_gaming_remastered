@@ -4,23 +4,28 @@
 
 {% block body %}
 
-    {% if error %}
-        <div>{{ error.messageData[0]}}</div>
-    {% endif %}
+    <div class="container">
 
-    <form action="{{ path('user_login') }}" method="post">
-        
-        <label for="username">Votre identifiant :</label>
-        <input placeholder="email inscrit..." id="username" required name="email" type="text" class="form-control" value={{last_username}}>
+        {% if error %}
+            <div>{{ error.messageData[0]}}</div>
+        {% endif %}
 
-        <label for="password">Votre mot de passe :</label>
-        <input placeholder="mot de passe enregistré..." id="password" required name="password" type="password" class="form-control inputPassword" autocomplete="on">
+        <form action="{{ path('user_login') }}" method="post">
+            
+            <label for="username">Votre identifiant :</label>
+            <input placeholder="email inscrit..." id="username" required name="email" type="text" class="form-control" value={{last_username}}>
 
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"> #}
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}">
+            <label for="password">Votre mot de passe :</label>
+            <input placeholder="mot de passe enregistré..." id="password" required name="password" type="password" class="form-control inputPassword" autocomplete="on">
 
-        <button type="submit">login</button>
-    </form>
+            {# If you want to control the URL the user is redirected to on success
+            <input type="hidden" name="_target_path" value="/account"> #}
+            <input type="hidden" name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}">
+
+            <button type="submit">login</button>
+        </form>
+
+    </div>
+
 {% endblock %}

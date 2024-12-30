@@ -1,0 +1,86 @@
+
+<div class="row" style="padding: 20px; border-bottom: white solid 2px">
+
+    <div class="col-3 text-start">
+        <div class="row mb-1">
+            <span>
+                <i class="fas fa-user"></i>
+                {{app.user}}
+            </span>
+        </div>
+        <div class="row mb-1">
+            <a class="text-light text-decoration-none hoverBold" href="{{ path('home') }}">
+                <i class="fas fa-home"></i>
+                Retour accueil
+            </a>
+        </div>
+        <div class="row">
+            <a class="text-light text-decoration-none hoverBold" href="{{ path('user_logout') }}">
+                <i class="fas fa-door-open"></i>
+                Déconnexion
+            </a>
+        </div>
+    </div>
+
+    <div class="col-6 text-center">
+        <h1 class="titreIndex">
+            HTML5 GAMING REMASTERED
+            <small> 
+                - by Mickael <i class="fa-solid fa-gamepad"></i>
+            </small>
+        </h1>
+    </div>
+
+    <div class="col-3 text-end">
+        <div class="row mb-1">
+            <span id="muteMusic" class="text-light text-decoration-none hoverBold cursor">
+                Mettre en sourdine
+                <i class="fa-solid fa-volume-xmark"></i>
+            </span>
+        </div>
+        <div class="row mb-1">
+            <span id="startMusic" class="text-light text-decoration-none hoverBold cursor">
+                Relancer l'audio
+                <i class="fa-solid fa-music"></i>   
+            </span>
+        </div>
+    </div>
+
+
+    <script>
+        $("#muteMusic").click(
+            function(){
+                $('.audio').each(function(){
+                    if ($(this).hasClass("muted")) {
+                        $(this).removeClass("muted");
+                        $('.audio').prop("muted", false);
+                        $("#muteMusic").html(
+                            `
+                                Mettre en sourdine
+                                <i class="fa-solid fa-volume-xmark"></i>
+                            `
+                        )
+                    }else{
+                        $(this).addClass("muted");
+                        $('.audio').prop("muted", true);
+                        $("#muteMusic").html(
+                            `
+                                Enlever la mise en sourdine
+                                <i class="fa-solid fa-volume-high"></i>
+                            `
+                        )
+                    }
+                })
+            }
+        )
+        $('#startMusic').click(
+            function(){
+                $('.audio').each(function(){
+                    this.currentTime = 0;
+                    this.play();
+                })
+            }
+        )
+    </script>
+
+</div>

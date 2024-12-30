@@ -1,0 +1,28 @@
+    {% if game.name|lower is same as("adulte") %}
+
+        <h3 class="text-danger">
+            <i class="fas fa-hand-middle-finger"></i>
+            Erreur 69 
+            <i class="fas fa-hand-middle-finger"></i>
+        <h3>
+
+    {% else %}
+
+        <table id="tableScores" class="tablePerso table table-dark">
+            <tr>
+                <th scope="col">Joueur</th>
+                <th scope="col">Arme/Personnage</th>
+                <th scope="col">Commandes</th>
+                <th scope="col">Score</th>
+            </tr>
+            {% for score in scores %}
+                <tr>
+                    <td>{{score.user}}</td>
+                    <td>{{score.weapon}}</td>
+                    <td>{{score.controls}}</td>
+                    <td>{{score.points}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% endif %}

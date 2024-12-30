@@ -3,113 +3,53 @@
 {# {% block title %}Hello IndexController!{% endblock %} #}
 
 {% block body %}
+
+  <audio id="audio" class="audio" autoplay loop src="../assets/music/scoreBoard.mp3"></audio>
+
   <div class="container">
-    <h1 class="titreIndex">HTML5 GAMING - By Enes et Mickael</h1>
-    <nav><a class="nav-link buttonPerso" href="../index.html">Retour au menu principal</a></nav>
-    <audio id="audio" class="audio" autoplay loop controls src="../assets/music/scoreBoard.mp3"></audio>
+
     <br/>
+    
+    <nav><a class="nav-link buttonPerso" href="{{ path('home') }}">Retour au menu principal</a></nav>
+
     <br/>
-    <br/>
-    <p>Vous jouez actuellement en tant que :  
-      <span id="showPseudo" class="showPseudoScoreBoard">
-        Invité
-      </span>
-    </p>
     <br/>
     <br/>
 
-    <form method="POST" id="gameForm">
+    <p>Vous jouez actuellement en tant que :</p>
+    <p>
+        <span class="showPseudo">
+            {{ app.user }}
+        </span>
+    </p>
+
+
+    <br/>
+    <br/>
+    <br/>
+
+    <div>
       <label for="game">Sélectionner le jeu à consulter: </label>
-      <select id="game" name="game" form="gameForm">
-        <option value="Seigneur des Anneaux">Seigneur des Anneaux</option>
-        <option value="Star Wars">Star Wars</option>
-        <option value="Epitech">Epitech</option>
-        <option value="Adulte">Adulte</option>
+      <select id="selectGame" name="game">
+        {% for game in games %}
+          <option value="{{game.id}}">{{game.name}}</option>
+        {% endfor %}
       </select>  
       <br>
       <br>
-      <input type="submit" value="Lancer la recherche">
-    </form>
-    <br/>
-    <br/>
-    <nav>
-      <table id="menuPrincipal" class="tablePerso table table-dark">
-        <?php
-          if(empty($_POST)){
-            echo '<tr class="text-center">Veuillez sélectionner un tableau de scores</tr>';
-          } else if ($_POST['game']=="Adulte"){
-            echo "<tr class='text-center'>Personne n'a autant l'esprit déplacé que toi, personne ne joue à ce jeu.</tr>";
-          } else {
-            $game = $_POST['game'];
-            echo '
-              <tr>
-                <th scope="col">Joueur</th>
-                <th scope="col">Arme/Personnage</th>
-                <th scope="col">Commandes</th>
-                <th scope="col">Score</th>
-              </tr>    
-            ';
+      <button class="btn btn-secondary" onclick="getScores()">Lancer la recherche</button>
+    </div>
 
-            $conn = mysqli_connect('localhost', 'root', '', 'project_gaming');
-            if($game=="Seigneur des Anneaux"){
-              $req = "SELECT * FROM score WHERE game='Seigneur des Anneaux' ORDER BY score DESC";
-            } else if ($game=="Star Wars"){
-              $req = "SELECT * FROM score WHERE game='Star Wars' ORDER BY score DESC";
-            } else if ($game=="Epitech"){
-              $req = "SELECT * FROM score WHERE game='Epitech' ORDER BY score DESC";
-            }
-            $res = $conn->query($req);
-            while ($data = mysqli_fetch_array($res)) {
-              // on affiche les résultats
-              echo "<tr>
-                <td>".$data['user']."</td>
-                <td>".$data['weapon']."</td>
-                <td>".$data['controls']."</td>
-                <td>".$data['score']."</td>
-              </tr>";
-            }
-          }
-        ?>
-      </table>
-    </nav>
+    <br/>
+    <br/>
+
+    <div id="divTableScores"></div>
+
+    
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="_scriptsScoreBoard.js" type="text/javascript"></script>
-</body>
-</html>
 
-<!-- // $reason = $_POST['reason'];
+  {% include "scores/_scriptsScoreBoard.html.twig" %}
 
-// if($reason=="saveScore"){
-
-//     $game = $_POST['game'];
-//     $weapon = $_POST['weapon'];
-//     $controls = $_POST['controls'];
-//     $score = $_POST['score'];
-
-//     $servername = "localhost";
-//     $username = "root";
-//     $password = "";
-//     $dbname = "project_gaming";
-    
-//     // Create connection
-//     $conn = new mysqli($servername, $username, $password, $dbname);
-//     // Check connection
-//     if ($conn->connect_error) {
-//       die("Connection failed: " . $conn->connect_error);
-//     }
-    
-//     $sql = "INSERT INTO score (user, game, weapon, controls, score)
-//     VALUES ('test', '$game', '$weapon', '$controls', 0)";
-    
-//     if ($conn->query($sql) === TRUE) {
-//       echo "New record created successfully";
-//     } else {
-//       echo "Error: " . $sql . "<br>" . $conn->error;
-//     }
-    
-//     $conn->close();    
-// } -->
 
 
 {% endblock %}

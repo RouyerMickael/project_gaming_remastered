@@ -4,36 +4,22 @@
 
 {% block body %}
 
-
-    <a class="text-light text-decoration-none hoverBold" href="{{ path('user_logout') }}">
-        <span>
-            <i class="fas fa-door-open"></i>
-            Déco.
-        </span>
-    </a>
-
+    <audio id="audio" class="audio" autoplay loop src="assets/music/index.mp3"></audio>
 
     <div class="container">
-        <h1 class="titreIndex">
-            HTML5 GAMING REMASTERED
-            <br/>
-            by Mickael
-            <i class="fa-solid fa-gamepad"></i>
-        </h1>
-        <audio id="audio" class="audio" autoplay loop controls src="assets/music/index.mp3"></audio>
         <br/>
         <br/>
         <br/>
         <p>Vous jouez actuellement en tant que :</p>
         <p>
-            <span id="showPseudo" class="showPseudo">
-                Invité
+            <span class="showPseudo">
+                {{ app.user }}
             </span>
         </p>
-        <p id="changePseudo" class="changePseudo" hidden>
+        {# <p id="changePseudo" class="changePseudo" hidden>
             <input id="inputChangePseudo" type="text">
             <button  id="buttonChangePseudo" class="btn-secondary" type="button">Confirmer</button>
-        </p>
+        </p> #}
         <br/>
         <nav>
             <ul id="menuPrincipal" class="nav flex-column">
@@ -46,9 +32,10 @@
         </nav>
         <br/>
         <br/>
-        <form action="templates/scoreBoard/scoreBoard.php">
+        <a href="{{ path('scoresMenu') }}">
             <input class="btn-secondary" type="submit" value="Voir le tableau des scores" />
-        </form>
+        </a>
+
     </div>
 
     <script>

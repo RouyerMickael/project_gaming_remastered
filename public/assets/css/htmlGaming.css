@@ -1,12 +1,8 @@
 /* GLOBALS */
 html{
     background-color: black;
-    display: flex;
-    justify-content: center;
     color: white;
-    text-align: center;
     padding: 20px;
-    font: small-caps bold 16px/1 sans-serif;
 }
 body{
     background-color: black !important;
@@ -19,6 +15,9 @@ h1{
     background-color: black !important;
     color: white;
     text-align: center;
+}
+.cursor{
+    cursor: pointer;
 }
 .nav{
     margin-top: 50px;

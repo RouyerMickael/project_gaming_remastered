@@ -1,0 +1,35 @@
+
+
+<script>
+
+    function getScores(){
+        let divResults = $("#divTableScores")
+        let gameId = $("#selectGame").find(":selected").val()
+        let gameName = $("#selectGame").find(":selected").text()
+        if(gameName=='Adulte'){
+            alert("Confirmes que tu as 18ans!")
+            alert("Mytho!")
+        }
+        $.ajax({
+            // Adresse à laquelle la requête est envoyée
+            url: "{{ path('getScores') }}",
+            // Le délai maximun en millisecondes de traitement de la demande
+            type: "POST",
+            data: {
+                "gameIdChoosed": gameId
+            },
+            timeout: 4000,
+            // La fonction à apeller si la requête aboutie
+            success: function (result) {
+                divResults.html(result)
+            },
+            // La fonction à appeler si la requête n'a pas abouti
+            error: function() {
+                divResults.html("Erreur système")
+            }
+        });
+    }
+
+</script>
+
+

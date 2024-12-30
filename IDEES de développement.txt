@@ -1,5 +1,14 @@
-MENU
+MENUS
 -> ajouter une série de vidéos en fondu des films StarWars/SeigneurDesAnneaux/Concerts (4 vidéos dans chaque coin et un timer aléatoire qui les fait apparaitre/disparaitre en fondu)
+-> choix des persos/vaisseaux, au hover: 
+	-> proposer un audio descriptif :
+		-> pour star wars: audio Rogue Leader
+	-> et/ou des vidéos de présentation :
+		-> pour Seigneur des Anneaux :
+			-> Gimli: https://www.youtube.com/watch?v=NgiVlIZXCnk&ab_channel=GamewithMovie
+			-> Legolas: https://www.youtube.com/watch?v=H9KP564Ws74&ab_channel=GamewithMovie
+			-> Gandalf: https://www.youtube.com/watch?v=qy9jtSxyhn8&ab_channel=GamewithMovie
+-> quand on click sur le nom de l'utilisateur connecté, avoir un tableau de score où il peut voir uniquement ses résultats et autres (positionnement actuel, meilleur classement, nb de parties terminées (=nb de scores), etc.)
 
 SEIGNEUR DES ANNEAUX
 -> corriger le bug de son du boss
@@ -9,7 +18,7 @@ SEIGNEUR DES ANNEAUX
 -> corriger le bug de sprite
 -> revoir le son d'impact sur un ennemie (quelque chose de plus harmonieux et immersif, par exemple des bruits d'orcs morts(différent via random ou selon ennemie))
 -> revoir les tirs du boss pour que ce soit des gros rochers plutôt qu'un rayon (utiliser mécanisme des flèches mais en plus gros)
--> revoir ou supprimer le bonus de tirs pour qu'ils soientt plus personnalisés (ex: Gandalf le bouclier, Legolas le tir rapide, Gimli la triplette) et/ou plus automatique 
+-> revoir ou supprimer le bonus de tirs pour qu'ils soientt plus personnalisés (ex: Gandalf le bouclier, Legolas le tir rapide, Gimli la triplette) et/ou plus automatique, via un système d'adrénaline par exemple
 (exemple en fontion du nombre de points atteints, tous les 5000, ou exponentielle, d'abord 2000 puis 5000, etc.)
 -> ajouter Aragorn ou Boromir ou Frodon (épée, bouclier, cailloux) avec un nouveau type de gameplay (corps à corps)
 	-> bonus de Aragorn : lance une épee qui prend toute une colonne/ligne
@@ -18,6 +27,7 @@ SEIGNEUR DES ANNEAUX
 	-> bonus de Sam : utilise la lampe de Frodon, qui empêche les ennemis de tirer
 -> abandonner le regain de vie auto, ajouter des fioles de potion à attraper
 -> les ennemis qui touchent le boss sont détruits (sans rapporter de points)
+
 
 EPITECH
 -> fond qui se transforme petit à petit en fond démoniaque
@@ -36,23 +46,29 @@ EPITECH
 	--> étape : les -42 deviennent effrayants avec des yeux et des dents
 -> rendre plus difficile/rapide la descente ou les tirs des ennemis à chaque vague
 -> plusieurs musiques à la chaine en aléatoire, sur le même tempo (voir bpm dans Virtual Dj)
+-> rire démoniaque aléatoire à la façon R2D2 mais à partir d'une certaine vague
+
 
 STAR WARS
 -> ajouter un son de tir pour le destroyer
 -> remplacer "vie" par "boucliers"
--> amélioration des vaisseaux in-game (vue de dessus)
+-> amélioration des vaisseaux in-game (vue de dessus) + faire tirer depuis les tourelles (+ ajouter deuxième tir du coup)
 -> amélioration du choix des vaisseaux (images et descriptif audio (celui de rogue leader))
 -> amélioration des bonus 
 	--> image, vitesse, et équilibrage pour tous
 	--> révision complète pour B-Wing (reset trop violent et comptabilise rien)
+-> ajout de nouveaux vaisseaux:
+	-> le faucon millenium: n'a pas de pouvoir mais une tourelle qui tir constamment devant elle de manière aléatoire concernant la direction (comme si un allié était dans la tourelle), le rendre en contrepartie plus lourd
+	-> le naboo fighter: récupère le pouvoir de la bombe, à l'inverse le y-wing empêche les ennemis de tirer
 -> amélioration des forces et faiblesses de chaque vaisseau (vitesse, rapidité de tirs, taille des rayons, fragilité ennemies, inversement puissance de feu selon ennemie)
 -> trouver le moyen de faire passer les ties et les tirs au-dessus du destroyers, ou alors une transparence avec bords visibles et colorés
 -> abandonner le regain de vie s'il y a
 -> afficher la propulsion du joueur que si déplacement vers le haut plutôt que par intervalles de temps
--> ajouter le faucon millenium et lui faire tirer à intervalle irrégulier et automatique un deuxième tir (comme si un allié était dans la tourelle), le rendre en contrepartie plus lourd
+
 -> changement gameplay y-wing: grâce à son canon ion, il peut empêcher les tirs adverses de s'activer, mais devra re-tirer pendant ce timing pour pouvoir détruire
 -> pour la bombre sismique, faire un tir qui va automatiquement au centre et fait exploser l'ensemble si dispo
 -> certains bonus se rechargents (exemple a-wing, x-wing) tandis que d'autres se comptent en nombre (bombes)
+
 
 TOUS
 -> faire en sorte que la page en hauteur s'adapte au canvas et au reste (qu'on soit pas obligé de dézoomer)
@@ -60,9 +76,21 @@ TOUS
 -> compresser au mieux les images
 -> trouver le moyen d'empêcher la souris de sortir du canvas
 -> proposer une regame ou un changement de perso à chaque partie, ou alors un bouton href pour aller au menu de choix des persos
-	--> au hover, proposer un audio descriptif (star wars) ou des répliques aléatoires (seigneur des anneaux)
--> mettre l'ensemble du projet dans une architecture Symfony pour sécuriser les entrées/sorties en BDD, et faciliter les templates/controllers
 
+
+NOUVEAU JEU GES
+-> 3 vaisseaux avec chacun un tir différent
+-> ramasser des monstres anticorps redonnent de la vie
+-> jeu d'évitement plutôt que tirs, ou alors un système de surchauffe de tirs
+-> gif dynamique récupéré à partir d'un jeu
+-> musique libre de droits et bruit moteur vaisseau quand accélération et virages
+
+--------------------------------------------------------------------------------------
+
+EN COURS
+Tous-> mettre l'ensemble du projet dans une architecture Symfony pour sécuriser les entrées/sorties en BDD, et faciliter les templates/controllers
+
+--------------------------------------------------------------------------------------
 
 FAIT:
 Tous-> correction des problèmes de vitesse de défilement/déplacement dûes au taux de rafraichissement de certians moniteurs (exemple ordis portables)

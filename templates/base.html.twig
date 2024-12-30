@@ -13,13 +13,15 @@
             <link rel="stylesheet" href="{{ asset('libs/fontawesome/css/all.min.css') }}">
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
         {% block javascripts %}
             {# {{ encore_entry_script_tags('app') }} #}
             <script src="libs/jquery/jquery.min.js"></script>
         {% endblock %}
     </head>
     <body>
+        {% if app.user %}
+            {% include "_baseTitle.html.twig" %}
+        {% endif %}
         {% block body %}{% endblock %}
     </body>
     <script>
