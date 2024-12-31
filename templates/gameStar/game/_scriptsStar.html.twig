@@ -1,5 +1,7 @@
-<script>
 
+{% include "common/_scoreScripts.html.twig" %}
+
+<script>
 
 //régulation de la vitesse cause fréquence du moniteur
 deltaDivisor = sessionStorage.getItem("deltaDivisor");
@@ -712,38 +714,11 @@ function update() {
 
         playerIsDead = true;
 
-        //envoi score BDD
         //finalScore
         finalScore = lastScore + score;
-        console.log(finalScore);
         clearInterval(tid);
         //envoi score BDD
-        $.ajax({
-            // Adresse à laquelle la requête est envoyée
-            url: "{{ path('addScore') }}",
-            // Le délai maximun en millisecondes de traitement de la demande
-            type: "POST",
-            data: {
-                "game": 3,
-                "user": "{{app.user.id}}",
-                "weapon": character,
-                "controls": "clavier",
-                "score": score
-            },
-            timeout: 4000,
-            // La fonction à apeller si la requête aboutie
-            success: function (result) {
-                console.log(result)
-            },
-            // La fonction à appeler si la requête n'a pas abouti
-            error: function() {
-                console.log('addScore error')
-            }
-        });
-        //
-        
-
-
+        addScore(3,"{{app.user.id}}",character,"clavier",finalScore)        
         //effets audio mort
         audioDeath.play();
         audioMusic.pause();

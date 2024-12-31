@@ -1,0 +1,29 @@
+<script>
+
+    function addScore(gameId,userId,characterName,controlsName,points){
+        //envoi score BDD
+        $.ajax({
+            // Adresse à laquelle la requête est envoyée
+            url: "{{ path('addScore') }}",
+            // Le délai maximun en millisecondes de traitement de la demande
+            type: "POST",
+            data: {
+                "game": gameId,
+                "user": userId,
+                "weapon": characterName,
+                "controls": controlsName,
+                "score": points
+            },
+            timeout: 4000,
+            // La fonction à apeller si la requête aboutie
+            success: function (result) {
+                console.log(result)
+            },
+            // La fonction à appeler si la requête n'a pas abouti
+            error: function() {
+                console.log('addScore error')
+            }
+        });
+    }
+
+</script>
