@@ -4,25 +4,13 @@
 
 {% block body %}
 
-  <audio id="audio" class="audio" autoplay loop src="../assets/music/scoreBoard.mp3"></audio>
+  <audio id="audioMusic" class="audio" autoplay loop src="../assets/music/scoreBoard.mp3"></audio>
 
   <div class="container">
 
-    <br/>
-    
-    <nav><a class="nav-link buttonPerso" href="{{ path('home') }}">Retour au menu principal</a></nav>
+    {% include "common/_backToTheMenu.html.twig" %}
 
-    <br/>
-    <br/>
-    <br/>
-
-    <p>Vous jouez actuellement en tant que :</p>
-    <p>
-        <span class="showPseudo">
-            {{ app.user }}
-        </span>
-    </p>
-
+    {% include "common/_youPlayAs.html.twig" %}
 
     <br/>
     <br/>

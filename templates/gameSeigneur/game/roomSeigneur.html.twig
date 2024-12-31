@@ -15,9 +15,9 @@
 
 <div class="game">
 
-  <h1>HTML5 GAMING - Seigneur des Anneaux</h1>
-  <nav><a class="nav-link buttonPerso" href="/">Retour au menu principal</a></nav>
-  <audio id="audioMusic" class="audio" loop controls src="{{asset('assets/gameSeigneur/assetsGame/audios/musics/victory.mp3')}}"></audio>
+  {% include "common/_backToTheMenu.html.twig" %}
+
+  <audio id="audioMusic" class="audio" loop src="{{asset('assets/gameSeigneur/assetsGame/audios/musics/victory.mp3')}}"></audio>
   <audio id="audioAmbiance" class="audio" loop src="{{asset('assets/gameSeigneur/assetsGame/audios/ambiances/combats.mp3')}}"></audio>
   <audio id="audioMusicDeath" class="audio" loop src="{{asset('assets/gameSeigneur/assetsGame/audios/musics/defeat.mp3')}}"></audio>
   <audio id="audioMusicMenu" class="audio" loop src="{{asset('assets/gameSeigneur/assetsGame/audios/musics/menu.mp3')}}"></audio>
@@ -33,9 +33,9 @@
   <div class="interface">
     <div class="col">
       <div class="row">
-        <div id="imagePlayer" class="col-2"></div>
-        <div id="infosCharacter" class="col-7 interfaceColumn"></div>
-        <div class="col-3">
+        <div id="imagePlayer" class="col-3 text-start"></div>
+        <div id="infosCharacter" class="col-6 interfaceColumn"></div>
+        <div class="col-3 text-end">
           <img alt="player" height="120" src="{{asset('assets/gameSeigneur/assetsGame/images/players/orcsOrigine.png')}}">
         </div>
       </div>

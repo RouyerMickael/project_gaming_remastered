@@ -16,9 +16,9 @@
 
   <div class="game">
 
-    <h1>HTML5 GAMING - Star Wars</h1>
-    <nav><a class="nav-link buttonPerso" href="/">Retour au menu principal</a></nav>
-    <audio id="audioMusic" class="audio" loop controls src="{{asset('assets/gameStar/assetsGame/audios/musics/victory.mp3')}}"></audio>
+    {% include "common/_backToTheMenu.html.twig" %}
+
+    <audio id="audioMusic" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/musics/victory.mp3')}}"></audio>
     <audio id="audioMusicDeath" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/musics/defeat.mp3')}}"></audio>
     <audio id="audioMusicMenu" class="audio" loop src="{{asset('assets/gameStar/assetsGame/audios/musics/menu.mp3')}}"></audio>
 
@@ -37,13 +37,13 @@
     
     <div class="interface">
       <div class="col">
-        <div class="row" style="width: 824px; height:100px">        
+        <div class="row">
           <div class="col" >
             <img id="textBonus" width="200" height="100" src="{{asset('assets/gameStar/assetsGame/images/bonus.gif')}}" class="giphy-embed"></img>
           </div>
         </div>
         <div class="row">
-          <div id="imagePlayer" class="col-3">
+          <div id="imagePlayer" class="col-3 text-start">
             <img alt="player" height="120" src="{{asset('assets/gameStar/assetsGame/images/players/luke.png')}}">
           </div>
           <div id="infosCharacter" class="col-6 interfaceColumn">
@@ -51,7 +51,7 @@
               <img alt="gifs cinema" height="120" width=200 src="{{asset('assets/gameStar/assetsGame/images/cinema/r2.gif')}}">   
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-3 text-end">
             <img alt="player" height="120" src="{{asset('assets/gameStar/assetsGame/images/players/globalTie.png')}}">
           </div>
         </div>

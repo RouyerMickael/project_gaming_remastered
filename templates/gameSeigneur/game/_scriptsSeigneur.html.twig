@@ -676,20 +676,29 @@ function update() {
     //conditions de game over et relance
     if (! player.alive && gameOver.visible === false) {
         playerIsDead = true;
-
         //envoi score BDD
-        var user = sessionStorage.getItem('user');
-        var request = new XMLHttpRequest();
-        var url = "../controllerBDD.php";
-        request.onreadystatechange = function () {
-            if (request.readyState === 4 && request.status === 200) {
-                console.log("ajax passé");
+        $.ajax({
+            // Adresse à laquelle la requête est envoyée
+            url: "{{ path('addScore') }}",
+            // Le délai maximun en millisecondes de traitement de la demande
+            type: "POST",
+            data: {
+                "game": 1,
+                "user": "{{app.user.id}}",
+                "weapon": character,
+                "controls": controlChoices,
+                "score": score
+            },
+            timeout: 4000,
+            // La fonction à apeller si la requête aboutie
+            success: function (result) {
+                console.log(result)
+            },
+            // La fonction à appeler si la requête n'a pas abouti
+            error: function() {
+                console.log('addScore error')
             }
-        };
-        request.open("POST", url, true);
-        request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-        let data = "reason="+"saveScore"+"&user="+user+"&game="+"Seigneur des Anneaux"+"&weapon="+character+"&controls="+controlChoices+"&score="+score;
-        request.send(data);
+        });
 
         //effets audio mort
         audioDeath.play();

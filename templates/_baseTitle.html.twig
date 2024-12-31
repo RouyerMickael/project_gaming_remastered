@@ -40,7 +40,7 @@
         </div>
         <div class="row mb-1">
             <span id="startMusic" class="text-light text-decoration-none hoverBold cursor">
-                Relancer l'audio
+                Relancer la musique
                 <i class="fa-solid fa-music"></i>   
             </span>
         </div>
@@ -75,7 +75,7 @@
         )
         $('#startMusic').click(
             function(){
-                $('.audio').each(function(){
+                $('#audioMusic').each(function(){
                     this.currentTime = 0;
                     this.play();
                 })

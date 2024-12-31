@@ -22,7 +22,9 @@
         {% if app.user %}
             {% include "_baseTitle.html.twig" %}
         {% endif %}
-        {% block body %}{% endblock %}
+        <div class="container text-center">
+            {% block body %}{% endblock %}
+        </div>
     </body>
     <script>
         {% block javascript %}{% endblock %}

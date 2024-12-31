@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="container text-center">
 
         {% if error %}
             <div>{{ error.messageData[0]}}</div>
@@ -13,17 +13,17 @@
         <form action="{{ path('user_login') }}" method="post">
             
             <label for="username">Votre identifiant :</label>
-            <input placeholder="email inscrit..." id="username" required name="email" type="text" class="form-control" value={{last_username}}>
+            <input style="max-width:400px" placeholder="email inscrit..." id="username" required name="email" type="text" class="form-control mx-auto mt-1 mb-3" value={{last_username}}>
 
             <label for="password">Votre mot de passe :</label>
-            <input placeholder="mot de passe enregistré..." id="password" required name="password" type="password" class="form-control inputPassword" autocomplete="on">
+            <input style="max-width:400px" placeholder="mot de passe enregistré..." id="password" required name="password" type="password" class="form-control inputPassword mx-auto mt-1 mb-3" autocomplete="on">
 
             {# If you want to control the URL the user is redirected to on success
             <input type="hidden" name="_target_path" value="/account"> #}
             <input type="hidden" name="_csrf_token"
                 value="{{ csrf_token('authenticate') }}">
 
-            <button type="submit">login</button>
+            <button class="btn btn-secondary mt-2" style="width:150px;height:50px" type="submit">se connecter</button>
         </form>
 
     </div>

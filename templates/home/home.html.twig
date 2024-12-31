@@ -4,22 +4,12 @@
 
 {% block body %}
 
-    <audio id="audio" class="audio" autoplay loop src="assets/music/index.mp3"></audio>
+    <audio id="audioMusic" class="audio" autoplay loop src="assets/music/index.mp3"></audio>
 
     <div class="container">
-        <br/>
-        <br/>
-        <br/>
-        <p>Vous jouez actuellement en tant que :</p>
-        <p>
-            <span class="showPseudo">
-                {{ app.user }}
-            </span>
-        </p>
-        {# <p id="changePseudo" class="changePseudo" hidden>
-            <input id="inputChangePseudo" type="text">
-            <button  id="buttonChangePseudo" class="btn-secondary" type="button">Confirmer</button>
-        </p> #}
+
+        {% include "common/_youPlayAs.html.twig" %}
+
         <br/>
         <nav>
             <ul id="menuPrincipal" class="nav flex-column">
@@ -33,7 +23,7 @@
         <br/>
         <br/>
         <a href="{{ path('scoresMenu') }}">
-            <input class="btn-secondary" type="submit" value="Voir le tableau des scores" />
+            <input class="btn btn-secondary" style="width:250px;height:50px" type="submit" value="Voir le tableau des scores" />
         </a>
 
     </div>

@@ -11,6 +11,9 @@ body{
 h1{
     margin-bottom: 1rem !important;
 }
+canvas{
+    margin: auto;
+}
 .container{
     background-color: black !important;
     color: white;
@@ -44,6 +47,10 @@ h1{
     margin-top: 3rem;
     font: bold 1.2em "Fira Sans", serif;
     font-size: small;
+}
+.interface .row{
+    max-width: 800px;
+    margin: auto;
 }
 #infosCharacter{
     display: flex;

@@ -88,7 +88,7 @@ NOUVEAU JEU GES
 --------------------------------------------------------------------------------------
 
 EN COURS
-Tous-> mettre l'ensemble du projet dans une architecture Symfony pour sécuriser les entrées/sorties en BDD, et faciliter les templates/controllers
+Tous-> mettre l'ensemble du projet à iso-fonctionnalité dans une architecture Symfony pour sécuriser les entrées/sorties en BDD, et faciliter les templates/controllers
 
 --------------------------------------------------------------------------------------
 

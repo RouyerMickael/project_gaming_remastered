@@ -20,7 +20,7 @@ setInterval(() => {
     deltaDivisor =  delta / fpsDesired
     sessionStorage.setItem("deltaDivisor",deltaDivisor);
     previousFrame = frames
-    }, 
+    },
     1000
 )
 
@@ -70,7 +70,7 @@ function getGame(game) {
         var menu = document.getElementById('menuPrincipal');
         url = '{{ path("seigneurMenu") }}'; 
         menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video autoplay loop controls><source src="assets/videos/intros/seigneur/seigneur_intro1.webm" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
-        var audio = document.getElementById('audio');
+        var audio = document.getElementById('audioMusic');
         audio.pause();
         audio.currentTime = 0;
       } else if(game=='star'){
@@ -78,7 +78,7 @@ function getGame(game) {
         var menu = document.getElementById('menuPrincipal');
         url = '{{ path("starMenu") }}'; 
         menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video autoplay loop controls><source src="assets/videos/intros/star/star_wars.mp4" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
-        var audio = document.getElementById('audio');
+        var audio = document.getElementById('audioMusic');
         audio.pause();
         audio.currentTime = 0;
       } else if(game=='epitech'){
@@ -98,13 +98,13 @@ function getGame(game) {
             alert("Cette AER n'existe pas.");
             window.location.reload();
         }
-        var audio = document.getElementById('audio');
+        var audio = document.getElementById('audioMusic');
         audio.pause();
         audio.currentTime = 0;
       } else if(game=='sexe'){
         var menu = document.getElementById('menuPrincipal');
         alert("Confirmes que tu as 18ans!");
-        alert("Mytho!");
+        alert("Mytho !");
       }
     } else {
       alert("Vous n'avez pas confirmer la modification de votre pseudo...")
