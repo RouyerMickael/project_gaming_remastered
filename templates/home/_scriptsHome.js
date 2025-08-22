@@ -68,7 +68,7 @@ function getGame(game) {
       if(game=='seigneur'){
         gameChoosen = true;
         var menu = document.getElementById('menuPrincipal');
-        url = '{{ path("seigneurMenu") }}'; 
+        url = '{{ path("menuSeigneur") }}'; 
         menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video autoplay loop controls><source src="assets/videos/intros/seigneur/seigneur_intro1.webm" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
         var audio = document.getElementById('audioMusic');
         audio.pause();

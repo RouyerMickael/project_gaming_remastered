@@ -1,13 +1,5 @@
 MENUS
 -> ajouter une série de vidéos en fondu des films StarWars/SeigneurDesAnneaux/Concerts (4 vidéos dans chaque coin et un timer aléatoire qui les fait apparaitre/disparaitre en fondu)
--> choix des persos/vaisseaux, au hover: 
-	-> proposer un audio descriptif :
-		-> pour star wars: audio Rogue Leader
-	-> et/ou des vidéos de présentation :
-		-> pour Seigneur des Anneaux :
-			-> Gimli: https://www.youtube.com/watch?v=NgiVlIZXCnk&ab_channel=GamewithMovie
-			-> Legolas: https://www.youtube.com/watch?v=H9KP564Ws74&ab_channel=GamewithMovie
-			-> Gandalf: https://www.youtube.com/watch?v=qy9jtSxyhn8&ab_channel=GamewithMovie
 -> quand on click sur le nom de l'utilisateur connecté, avoir un tableau de score où il peut voir uniquement ses résultats et autres (positionnement actuel, meilleur classement, nb de parties terminées (=nb de scores), etc.)
 
 SEIGNEUR DES ANNEAUX
@@ -73,7 +65,7 @@ STAR WARS
 TOUS
 -> faire en sorte que la page en hauteur s'adapte au canvas et au reste (qu'on soit pas obligé de dézoomer)
 -> selon la vie perdue, ajouter un border sur le canvas (jaune/orange/rouge) qui s'efface ensuite, selon la vulnérabilité du coup reçu (ex. si -10 ou -20 ou -30)
--> compresser au mieux les images
+-> compresser toutes les images
 -> trouver le moyen d'empêcher la souris de sortir du canvas
 -> proposer une regame ou un changement de perso à chaque partie, ou alors un bouton href pour aller au menu de choix des persos
 
@@ -88,9 +80,16 @@ NOUVEAU JEU GES
 --------------------------------------------------------------------------------------
 
 EN COURS
-Tous-> harmoniser et mettre l'ensemble du projet à iso-fonctionnalité dans une architecture Symfony pour sécuriser les entrées/sorties en BDD, et faciliter les templates/controllers
-
+-> choix des persos/vaisseaux via des menus + au hover: 
+	-> proposer un audio descriptif :
+		-> pour star wars: audio Rogue Leader
+	-> et/ou des vidéos de présentation :
+		-> pour Seigneur des Anneaux :
+			-> Gimli: https://www.youtube.com/watch?v=NgiVlIZXCnk&ab_channel=GamewithMovie
+			-> Legolas: https://www.youtube.com/watch?v=H9KP564Ws74&ab_channel=GamewithMovie
+			-> Gandalf: https://www.youtube.com/watch?v=qy9jtSxyhn8&ab_channel=GamewithMovie
 --------------------------------------------------------------------------------------
 
 FAIT:
+Tous-> mettre l'ensemble du projet à iso-fonctionnalité dans une architecture Symfony pour sécuriser les entrées/sorties en BDD, et faciliter les templates/controllers
 Tous-> correction des problèmes de vitesse de défilement/déplacement dûes au taux de rafraichissement de certians moniteurs (exemple ordis portables)

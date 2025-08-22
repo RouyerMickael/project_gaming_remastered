@@ -40,7 +40,7 @@ canvas{
 .audio{
     margin-top: 30px;
 }
-.interface{
+.interface, .menu{
     display: flex;
     justify-content: space-around;
     color: burlywood;
