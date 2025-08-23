@@ -1,11 +1,11 @@
 
-<div class="row" style="padding: 20px; border-bottom: white solid 2px">
+<div class="row" style="padding: 20px;">
 
-    <div class="col-3 text-start">
+    <div class="col-6 text-start">
         <div class="row mb-1">
-            <span>
-                <i class="fas fa-user"></i>
-                {{app.user}}
+            <span class="d-flex">
+                <i class="fas fa-user me-2"></i>
+                {{app.user|capitalize}}
             </span>
         </div>
         <div class="row mb-1">
@@ -22,20 +22,15 @@
         </div>
     </div>
 
-    <div class="col-6 text-center">
-        <h1 class="titreIndex">
-            HTML5 GAMING REMASTERED
-            <small> 
-                - by Mickael <i class="fa-solid fa-gamepad"></i>
-            </small>
-        </h1>
-    </div>
-
-    <div class="col-3 text-end">
+    <div class="col-6 text-end">
         <div class="row mb-1">
             <span id="muteMusic" class="text-light text-decoration-none hoverBold cursor">
                 Mettre en sourdine
                 <i class="fa-solid fa-volume-xmark"></i>
+            </span>
+            <span id="demuteMusic" style="display:none" class="text-light text-decoration-none hoverBold cursor">
+                Enlever la mise en sourdine
+                <i class="fa-solid fa-volume-high"></i>
             </span>
         </div>
         <div class="row mb-1">
@@ -46,41 +41,76 @@
         </div>
     </div>
 
+    <div class="row" style="padding: 20px; border-bottom: white solid 2px">
+        <div class="col-12 text-center">
+            <h1 class="titreIndex">
+                HTML5 GAMING REMASTERED
+                <br/>
+                <small><i>
+                    by Mickael <i class="fa-solid fa-gamepad"></i>
+                </i></small>
+            </h1>
+        </div>
+    </div>
 
     <script>
+        
+        $(document).ready(
+            function(){
+                checkMuteAudios()
+            }
+        )
+
         $("#muteMusic").click(
             function(){
-                $('.audio').each(function(){
-                    if ($(this).hasClass("muted")) {
-                        $(this).removeClass("muted");
-                        $('.audio').prop("muted", false);
-                        $("#muteMusic").html(
-                            `
-                                Mettre en sourdine
-                                <i class="fa-solid fa-volume-xmark"></i>
-                            `
-                        )
-                    }else{
-                        $(this).addClass("muted");
-                        $('.audio').prop("muted", true);
-                        $("#muteMusic").html(
-                            `
-                                Enlever la mise en sourdine
-                                <i class="fa-solid fa-volume-high"></i>
-                            `
-                        )
-                    }
-                })
+                muteAudios()
+                sessionStorage.setItem("muteAudios", true);
             }
         )
+        $("#demuteMusic").click(
+            function(){
+                demuteAudios()
+                sessionStorage.setItem("muteAudios", false);
+            }
+        )        
         $('#startMusic').click(
             function(){
-                $('#audioMusic').each(function(){
-                    this.currentTime = 0;
-                    this.play();
-                })
+                startAudios()
             }
         )
+        
+        function muteAudios(){
+            $('.audio').each(function(){
+                $(this).addClass("muted");
+                $('.audio').prop("muted", true);
+                $("#muteMusic").hide()
+                $("#demuteMusic").show()
+            })
+        }
+
+        function demuteAudios(){
+            $('.audio').each(function(){
+                $(this).removeClass("muted");
+                $('.audio').prop("muted", false);
+                $("#demuteMusic").hide()
+                $("#muteMusic").show()
+            })
+        }
+
+        function startAudios(){
+            $('#audioMusic').each(function(){
+                this.currentTime = 0;
+                this.play();
+            })
+        }
+
+        function checkMuteAudios(){
+            let muteAudios = sessionStorage.getItem("muteAudios")
+            if(muteAudios==="true"){
+                this.muteAudios()
+            }
+        }
+
     </script>
 
 </div>

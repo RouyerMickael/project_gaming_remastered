@@ -3,23 +3,29 @@
 
 {% block body %}
 
-
-    {% include "common/_backToTheMenu.html.twig" %}
-
-    <audio id="audioMusic" class="audio" loop src="{{asset('assets/gameSeigneur/assetsGame/audios/musics/victory.mp3')}}"></audio>
+    <audio id="audioMusic" class="audio" autoplay loop src="{{asset('assets/gameSeigneur/assetsGame/audios/musics/menu.mp3')}}"></audio>
 
     <div class="menu">
 
         <div class="row">
             <div class="col-12">
-                <h3>Bonjour membres de la communauté</h3>
-                <p>
-                    Il s'agit d'un jeu type SpaceInvaders où le but sera de survivre le plus longtemps possible
-                    tout en tuant un maximum d'ennemis
-                </p>
-                <button onclick="nextStep(null)">
-                    suivant
-                </button>
+                <div>
+                    <h3>Bienvenue, amis de la communauté</h3>
+                </div>
+                <div class="mt-4">
+                    <h5>
+                        Il s'agit d'un jeu type SpaceInvaders où le but sera de survivre le plus longtemps possible
+                        tout en tuant un maximum d'ennemis
+                    </h5>
+                    <h5>
+                        A chacune de vos morts, votre score est enregistré et retrouvable dans le tableau des scores accessible via l'accueil.
+                    </h5>
+                </div>
+                <div class="mt-4">
+                    <button class="btn btn-outline-light" onclick="nextStep(null)">
+                        continuer
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -27,24 +33,33 @@
 
 
     <script>
-
+        
+        $(document).ready(
+            function(){
+                checkMuteAudios()
+            }
+        )
+        
         var stepMenu = 0
         
         var controls = ""
-        var weapon = ""
+        var weapons = ""
+
 
         function nextStep(variable){
+            //IMPORTANT: en cas de (gros) problèmes de performance liées par exemple aux vidéos (mais pas que), pensez à activer dans php.ini 
+            //de WAMP l'option session.auto_start = 1
             stepMenu = stepMenu + 1
             console.log(stepMenu)
             if(stepMenu===2){
                 controls = variable
                 console.log(controls)
             } else if(stepMenu===3){
-                weapon = variable
-                console.log(weapon)
+                weapons = variable
+                console.log(weapons)
             }
             console.log(stepMenu)
-            //envoi score BDD
+            // $(".menu").html("<img src='{{asset('assets/gameSeigneur/assetsGame/images/loader.gif')}}'>")
             $.ajax({
                 // Adresse à laquelle la requête est envoyée
                 url: "{{ path('menuSeigneur') }}",
@@ -52,28 +67,16 @@
                 type: "POST",
                 data: {
                     "stepMenu": stepMenu,
+                    "controls": controls,
+                    "weapons": weapons
                 },
-                timeout: 4000,
                 // La fonction à apeller si la requête aboutie
                 success: function (result) {
-                    if(stepMenu>=3){
-                        let path = `
-                            <form action="{{ path('gameSeigneur') }}" method="POST">
-                                <input type="hidden" name="controls" value="controlsName"/>
-                                <input type="hidden" name="weapon" value="weaponName"/>
-                                <button type="submit">Lancer la partie</button>
-                            </form>
-                        `
-                        path = path.replace("controlsName", controls);
-                        path = path.replace("weaponName", weapon);
-                        $(".menu").html(path)
-                    } else {
-                        $(".menu").html(result)
-                    }
+                    $(".menu").html(result)
                 },
                 // La fonction à appeler si la requête n'a pas abouti
-                error: function() {
-                    console.log('nextStep error')
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('nextStep error:'+textStatus)
                 }
             });
         }

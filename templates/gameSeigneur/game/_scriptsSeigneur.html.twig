@@ -7,67 +7,14 @@
 deltaDivisor = sessionStorage.getItem("deltaDivisor");
 
 //audio menu
+checkMuteAudios()
 let audioMusicMenu = document.getElementById('audioMusicMenu');
-audioMusicMenu.play();
-
-//choix du personnage
-let character ="";
-let controlChoices="";
-
-while(character!="legolas" && character !="gimli" && character !="gandalf" && controlChoices!="clavier" && controlChoices !="souris"){
-    character = prompt("Quel personnage voulez-vous incarner ('legolas', 'gimli', ou 'gandalf') ?");
-    while(character!="legolas" && character !="gimli" && character !="gandalf"){
-        if(character==null){
-            document.location.href="../index.html"
-        } else {
-            if (character == ""){
-                alert("Ce personnage n'existe pas ou n'est pas disponible");
-                character = prompt("Quel personnage voulez-vous incarner ('legolas', 'gimli', ou 'gandalf') ?")
-            } else {
-                character = character.trim().toLowerCase();
-                if(character!="legolas" && character !="gimli" && character !="gandalf"){
-                    alert("Ce personnage n'existe pas ou n'est pas disponible");
-                    character = prompt("Quel personnage voulez-vous incarner ('legolas', 'gimli', ou 'gandalf') ?")
-                }
-            }
-        }
-    }
-    controlChoices = prompt("Quels controles souhaites-vous ('clavier' ou 'souris') ? \n\nTouches au clavier : déplacements latéraux = flèches de direction ; touche de tir = barre d'espace.\nTouches à la souris : déplacements latéraux = déplacer la souris ; touche de tir = clic gauche.");
-    while(controlChoices!="clavier" && controlChoices !="souris"){
-        if(controlChoices==null){
-            controlChoices = prompt("Quels controles souhaites-vous ('clavier' ou 'souris') ? \n\nTouches au clavier : déplacements latéraux = flèches de direction ; touche de tir = barre d'espace.\nTouches à la souris : déplacements latéraux = déplacer la souris ; touche de tir = clic gauche.")
-        } else {
-            if (controlChoices == ""){
-                alert("Cette commande n'existe pas ou n'est pas disponible");
-                controlChoices = prompt("Quels controles souhaites-vous ('clavier' ou 'souris') ? \n\nTouches au clavier : déplacements latéraux = flèches de direction ; touche de tir = barre d'espace.\nTouches à la souris : déplacements latéraux = déplacer la souris ; touche de tir = clic gauche.")
-            } else {
-                controlChoices = controlChoices.trim().toLowerCase();
-                if(controlChoices!="clavier" && controlChoices !="souris"){
-                    alert("Cette commande n'existe pas ou n'est pas disponible");
-                    controlChoices = prompt("Quels controles souhaites-vous ('clavier' ou 'souris') ? \n\nTouches au clavier : déplacements latéraux = flèches de direction ; touche de tir = barre d'espace.\nTouches à la souris : déplacements latéraux = déplacer la souris ; touche de tir = clic gauche.")
-                }
-            }
-        }
-    }
-}
+audioMusicMenu.play();    
 
 
-// //choix des commandes
-// let controlChoices = prompt("Quels controles souhaites-vous ('clavier' ou 'souris') ?");
-// while(controlChoices!="clavier" && controlChoices !="souris"){
-//     if (controlChoices == ""){
-//         alert("Cette commande n'existe pas ou n'est pas disponible");
-//         controlChoices = prompt("Quels controles souhaites-vous ('clavier' ou 'souris') ?")
-//     } else {
-//         controlChoices = controlChoices.toLowerCase();
-//         if(controlChoices!="clavier" && controlChoices !="souris"){
-//             alert("Cette commande n'existe pas ou n'est pas disponible");
-//             controlChoices = prompt("Quels controles souhaites-vous ('clavier' ou 'souris') ?")
-//         }
-//     }
-// }
-
-
+//config du personnage
+let character = '{{ weapons }}';
+let controlChoices= '{{ controls }}';
 let imageCharacter ='';
 let imageWeapon = '';
 let characterLife = '';

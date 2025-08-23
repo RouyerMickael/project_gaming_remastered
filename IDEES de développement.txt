@@ -88,6 +88,7 @@ EN COURS
 			-> Gimli: https://www.youtube.com/watch?v=NgiVlIZXCnk&ab_channel=GamewithMovie
 			-> Legolas: https://www.youtube.com/watch?v=H9KP564Ws74&ab_channel=GamewithMovie
 			-> Gandalf: https://www.youtube.com/watch?v=qy9jtSxyhn8&ab_channel=GamewithMovie
+-> avec une variable de session, faire en sorte que la musique/son de tous les audios (video compris) ne se lancent plus sur une aucune page
 --------------------------------------------------------------------------------------
 
 FAIT:

@@ -63,13 +63,18 @@ buttonChangePseudo.addEventListener('click', event => {
 
 
 function getGame(game) {
+    let muted = ""
+    var muteAudiosSession = sessionStorage.getItem("muteAudios")
+    if(muteAudiosSession==="true"){
+      muted = "muted"
+    }
     var url = ""
     if(pseudoChoosen==true){
       if(game=='seigneur'){
         gameChoosen = true;
         var menu = document.getElementById('menuPrincipal');
         url = '{{ path("menuSeigneur") }}'; 
-        menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video autoplay loop controls><source src="assets/videos/intros/seigneur/seigneur_intro1.webm" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
+        menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/seigneur/seigneur_intro1.webm" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
         var audio = document.getElementById('audioMusic');
         audio.pause();
         audio.currentTime = 0;

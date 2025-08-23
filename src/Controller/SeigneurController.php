@@ -16,9 +16,11 @@ class SeigneurController extends AbstractController
     public function seigneurMenu(Request $request): Response
     {
         $params = array(
-            "stepMenu" => $request->get('stepMenu')
+            "stepMenu" => $request->get('stepMenu'),
+            "controls" => $request->get('controls'),
+            "weapons" => $request->get('weapons')
         );
-
+        
         switch($params['stepMenu']){
             case '1':
                 $pathView = 'gameSeigneur/menu/_menuControls.html.twig';
@@ -26,16 +28,19 @@ class SeigneurController extends AbstractController
             case '2':
                 $pathView = 'gameSeigneur/menu/_menuWeapons.html.twig';
                 break;
+            case '3':
+                $pathView = 'gameSeigneur/menu/_menuReady.html.twig';
+                break;
             default:
                 $pathView = 'gameSeigneur/menu/menuSeigneur.html.twig';
         }
-
         return $this->render($pathView, [
             'controller_name' => 'SeigneurController',
+            'controls'=> $params['controls'],
+            'weapons'=> $params['weapons']        
         ]);
 
     }
-
 
 
     /**
@@ -46,11 +51,9 @@ class SeigneurController extends AbstractController
         
         $params = array(
             "controls" => $request->get('controls'),
-            "weapon" => $request->get('weapon')
+            "weapons" => $request->get('weapons')
         );
 
-        var_dump($params);
-        die();
 
         return $this->render('gameSeigneur/game/gameSeigneur.html.twig', [
             'controller_name' => 'SeigneurController',

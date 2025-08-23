@@ -1,0 +1,25 @@
+
+
+<div class="row">
+    <div class="col-12">
+        <div>
+            <h4>
+                <b>{{weapons|capitalize}}</b> n'attend plus que vous !
+            <h4>
+            <h4>
+                Préparez votre <b>{{controls}}</b> pour la bataille !
+            <h4> 
+        </div>
+
+        <div class="mt-4">
+            <form action="{{ path('gameSeigneur') }}" method="POST">
+                <input type="hidden" name="controls" value="{{controls}}"/>
+                <input type="hidden" name="weapons" value="{{weapons}}"/>
+                <button class="btn btn-outline-light" type="submit">Lancer la bataille</button>
+            </form>
+        </div>
+        
+    </div>
+</div>
+
+

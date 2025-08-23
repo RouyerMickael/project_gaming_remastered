@@ -1,27 +1,115 @@
+<style>
+    .overTopVideo {
+        position: absolute;
+        cursor: pointer;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: black;
+        display: none;
+        width: 100% ;
+        height: 100%
+    }
+</style>
 
 
 <div class="row">
-    <div class="col-12">
-    <h3>Choisissez votre personnage...</h3>
+    <div class="col-12 mb-4">
+        <h3 id="test">Choisissez votre personnage...</h3>
     </div>
     <div class="row">
-        <div class="col-4">
-            <span onclick="nextStep('ganfalf')">
-                <img width="300" height="300" src="{{asset('assets/gameSeigneur/assetsGame/menus/gandalf.jpeg')}}">
-                <p>Ganfalf</p>
-            </span>
+        <div class="col text-center">
+            <div id="spanGandalf" width="400" height="300" class="position-relative" onclick="nextStep('gandalf')">
+                <img id="gandalfImage" width="400" height="300" src="{{asset('assets/gameSeigneur/assetsGame/menus/gandalf.jpeg')}}">
+                <br/>
+                <video id="gandalfVideo" class="overTopVideo" type="video/mp4" autoplay loop muted>
+                    <source src="{{asset('assets/gameSeigneur/assetsGame/menus/gandalf_all_fights.mp4')}}" type="video/mp4">
+                </video>
+            </div>
+            <br/>
+            <p>Ganfalf</p>
         </div>
-        <div class="col-4">
-            <span onclick="nextStep('gimli')">
-                <img width="400" height="300" src="{{asset('assets/gameSeigneur/assetsGame/menus/gimli.jpg')}}">
-                <p>Gimli</p>
-            </span>
+        <div class="col">
+            <div id="spanGimli" width="400" height="300" class="position-relative" onclick="nextStep('gimli')">
+                <img id="gimliImage" width="400" height="300" src="{{asset('assets/gameSeigneur/assetsGame/menus/gimli.jpg')}}">
+                <br/>
+                <video id="gimliVideo" class="overTopVideo" type="video/mp4" autoplay loop muted>
+                    <source src="{{asset('assets/gameSeigneur/assetsGame/menus/gimli_all_fights.mp4')}}" type="video/mp4">
+                </video>
+            </div>
+            <br/>
+            <p>Gimli</p>
+            <br/>
         </div>
-        <div class="col-4">
-            <span onclick="nextStep('legolas')">
+        <div class="col">
+            <div  id="spanLegolas" width="400" height="300" class="position-relative" onclick="nextStep('legolas')">
                 <img width="400" height="300" src="{{asset('assets/gameSeigneur/assetsGame/menus/legolas.jpg')}}">
-                <p>Legolas</p>
-            </span>
+                <br/>
+                <video id="legolasVideo" class="overTopVideo" type="video/mp4" autoplay loop muted>
+                    <source src="{{asset('assets/gameSeigneur/assetsGame/menus/legolas_all_fights.mp4')}}" type="video/mp4">
+                </video>
+            </div>
+            <br/>
+            <p>Legolas</p>
         </div>
     </div>
 </div>
+
+
+<script>
+
+    
+    $("#spanGandalf").hover(function(){
+        let muteAudiosSession = sessionStorage.getItem("muteAudios")
+        $("#gandalfVideo").show()
+        if(muteAudiosSession!="true"){
+            $("#gandalfVideo").prop("muted", false)
+            $("#audioMusic").prop("muted", true)
+        }
+        }, function(){
+            let muteAudiosSession = sessionStorage.getItem("muteAudios")
+            $("#gandalfVideo").hide()
+            $("#gandalfImage").show()     
+            $("#gandalfVideo").prop("muted", true)
+            if(muteAudiosSession!="true"){
+                demuteAudios();
+            }
+        }
+    )
+
+    $("#spanGimli").hover(function(){
+        let muteAudiosSession = sessionStorage.getItem("muteAudios")
+        $("#gimliVideo").show()
+        if(muteAudiosSession!="true"){
+            $("#gimliVideo").prop("muted", false)
+            $("#audioMusic").prop("muted", true)
+        }
+        }, function(){
+            let muteAudiosSession = sessionStorage.getItem("muteAudios")
+            $("#gimliVideo").hide()
+            $("#gimliVideo").prop("muted", true)
+            if(muteAudiosSession!="true"){
+                demuteAudios();
+            }
+        }
+    )
+
+    $("#spanLegolas").hover(function(){
+        let muteAudiosSession = sessionStorage.getItem("muteAudios")
+        $("#legolasVideo").show()
+        if(muteAudiosSession!="true"){
+            $("#legolasVideo").prop("muted", false)
+            $("#audioMusic").prop("muted", true)
+        }
+        }, function(){
+            let muteAudiosSession = sessionStorage.getItem("muteAudios")
+            $("#legolasVideo").hide()
+            $("#legolasVideo").prop("muted", true)
+            if(muteAudiosSession!="true"){
+                demuteAudios();
+            }
+        }
+    )
+
+
+</script>
