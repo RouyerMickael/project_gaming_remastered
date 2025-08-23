@@ -1,0 +1,7 @@
+Tourne sur:
+
+- Apache 2.4.46
+- PHP 7.4.9
+- MySql 5.7.31
+- Composer 2.5.5
+- Symfony 5.4.48
