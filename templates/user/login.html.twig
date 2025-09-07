@@ -7,7 +7,7 @@
     <div class="container text-center">
 
         {% if error %}
-            <div>{{ error.messageData[0]}}</div>
+            <div class="text-danger">{{ error.messageData[0]}}</div>
         {% endif %}
 
         <form action="{{ path('user_login') }}" method="post">
