@@ -60,54 +60,53 @@
 
     
     $("#spanGandalf").hover(function(){
-        let muteAudiosSession = sessionStorage.getItem("muteAudios")
+        // let muteAudiosSession = sessionStorage.getItem("muteAudios")
         $("#gandalfVideo").show()
-        if(muteAudiosSession!="true"){
-            $("#gandalfVideo").prop("muted", false)
-            $("#audioMusic").prop("muted", true)
-        }
+        // if(muteAudiosSession!="true"){
+        //     $("#gandalfVideo").prop("muted", false)
+        //     $("#audioMusic").prop("muted", true)
+        // }
         }, function(){
-            let muteAudiosSession = sessionStorage.getItem("muteAudios")
+            // let muteAudiosSession = sessionStorage.getItem("muteAudios")
             $("#gandalfVideo").hide()
-            $("#gandalfImage").show()     
-            $("#gandalfVideo").prop("muted", true)
-            if(muteAudiosSession!="true"){
-                demuteAudios();
-            }
+            // $("#gandalfVideo").prop("muted", true)
+            // if(muteAudiosSession!="true"){
+            //     demuteAudios();
+            // }
         }
     )
 
     $("#spanGimli").hover(function(){
-        let muteAudiosSession = sessionStorage.getItem("muteAudios")
+        // let muteAudiosSession = sessionStorage.getItem("muteAudios")
         $("#gimliVideo").show()
-        if(muteAudiosSession!="true"){
-            $("#gimliVideo").prop("muted", false)
-            $("#audioMusic").prop("muted", true)
-        }
+        // if(muteAudiosSession!="true"){
+        //     $("#gimliVideo").prop("muted", false)
+        //     $("#audioMusic").prop("muted", true)
+        // }
         }, function(){
-            let muteAudiosSession = sessionStorage.getItem("muteAudios")
+            // let muteAudiosSession = sessionStorage.getItem("muteAudios")
             $("#gimliVideo").hide()
-            $("#gimliVideo").prop("muted", true)
-            if(muteAudiosSession!="true"){
-                demuteAudios();
-            }
+            // $("#gimliVideo").prop("muted", true)
+            // if(muteAudiosSession!="true"){
+            //     demuteAudios();
+            // }
         }
     )
 
     $("#spanLegolas").hover(function(){
-        let muteAudiosSession = sessionStorage.getItem("muteAudios")
+        // let muteAudiosSession = sessionStorage.getItem("muteAudios")
         $("#legolasVideo").show()
-        if(muteAudiosSession!="true"){
-            $("#legolasVideo").prop("muted", false)
-            $("#audioMusic").prop("muted", true)
-        }
+        // if(muteAudiosSession!="true"){
+        //     $("#legolasVideo").prop("muted", false)
+        //     $("#audioMusic").prop("muted", true)
+        // }
         }, function(){
-            let muteAudiosSession = sessionStorage.getItem("muteAudios")
+            // let muteAudiosSession = sessionStorage.getItem("muteAudios")
             $("#legolasVideo").hide()
-            $("#legolasVideo").prop("muted", true)
-            if(muteAudiosSession!="true"){
-                demuteAudios();
-            }
+            // $("#legolasVideo").prop("muted", true)
+            // if(muteAudiosSession!="true"){
+            //     demuteAudios();
+            // }
         }
     )
 
