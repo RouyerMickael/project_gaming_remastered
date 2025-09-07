@@ -1,5 +1,6 @@
 
 ###> symfony/framework-bundle ###
+/.gitOld
 /.env
 /.env.local
 /.env.local.php
@@ -22,4 +23,6 @@
 
 ###medias too bigs ###
 /public/assets/gameSeigneur/assetsGame/menus/gandalf_all_fights.mp4
-/public/assets/gameSeigneur/assetsGame/menus/gandalf_all_fightsOrgiga.mp4
+/public/assets/videos/intros/epitech/epitech_origine.mp4
+/public/assets/videos/intros/seigneur/seigneur_introOrigine.mp4
+/public/assets/videos/intros/star/star_warsOrigine.mp4

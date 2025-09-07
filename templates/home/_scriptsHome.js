@@ -74,7 +74,7 @@ function getGame(game) {
         gameChoosen = true;
         var menu = document.getElementById('menuPrincipal');
         url = '{{ path("menuSeigneur") }}'; 
-        menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/seigneur/seigneur_intro1.webm" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
+        menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video width=100% height=100% class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/seigneur/seigneur_intro.mp4" type="video/mp4"></video><a class="buttonPerso" href="/">Retour</a>';
         var audio = document.getElementById('audioMusic');
         audio.pause();
         audio.currentTime = 0;
@@ -82,7 +82,7 @@ function getGame(game) {
         gameChoosen = true;
         var menu = document.getElementById('menuPrincipal');
         url = '{{ path("starMenu") }}'; 
-        menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video autoplay loop controls><source src="assets/videos/intros/star/star_wars.mp4" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
+        menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video width=100% height=100% class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/star/star_wars.mp4" type="video/mp4"></video><a class="buttonPerso" href="/">Retour</a>';
         var audio = document.getElementById('audioMusic');
         audio.pause();
         audio.currentTime = 0;
@@ -93,11 +93,11 @@ function getGame(game) {
         switch (presentator) {
           case 'sophie':
             gameChoosen = true;
-            menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video autoplay loop controls><source src="assets/videos/intros/epitech/epitech_sophie.mp4" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
+            menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video width=100% height=100% class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/epitech/epitech_sophie.mp4" type="video/mp4"></video><a class="buttonPerso" href="/">Retour</a>';
             break;
           case 'directeur':
             gameChoosen = true;
-            menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video autoplay loop controls><source src="assets/videos/intros/epitech/epitech_directeur.mp4" type="video/webm"></video><a class="buttonPerso" href="/">Retour</a>';
+            menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video width=100% height=100% class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/epitech/epitech_directeur.mp4" type="video/mp4"></video><a class="buttonPerso" href="/">Retour</a>';
           break;
           default:
             alert("Cette AER n'existe pas.");
