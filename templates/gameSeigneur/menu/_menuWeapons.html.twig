@@ -23,7 +23,7 @@
                 <img id="gandalfImage" width="400" height="300" src="{{asset('assets/gameSeigneur/assetsGame/menus/gandalf.jpeg')}}">
                 <br/>
                 <video id="gandalfVideo" class="overTopVideo" type="video/mp4" autoplay loop muted>
-                    <source src="{{asset('assets/gameSeigneur/assetsGame/menus/gandalf_all_fights.mp4')}}" type="video/mp4">
+                    <source src="{{asset('assets/gameSeigneur/assetsGame/menus/gandalf_all_fights_comp.mp4')}}" type="video/mp4">
                 </video>
             </div>
             <br/>
@@ -58,57 +58,37 @@
 
 <script>
 
-    
+    $(document).ready(function() {
+        //random start videos
+        $('#gandalfVideo').on('loadedmetadata', function() {
+            this.currentTime = Math.random() * this.duration;
+        });
+        $('#gimliVideo').on('loadedmetadata', function() {
+            this.currentTime = Math.random() * this.duration;
+        });
+        $('#legolasVideo').on('loadedmetadata', function() {
+            this.currentTime = Math.random() * this.duration;
+        });
+    });
+
+    //hover videos
     $("#spanGandalf").hover(function(){
-        // let muteAudiosSession = sessionStorage.getItem("muteAudios")
         $("#gandalfVideo").show()
-        // if(muteAudiosSession!="true"){
-        //     $("#gandalfVideo").prop("muted", false)
-        //     $("#audioMusic").prop("muted", true)
-        // }
         }, function(){
-            // let muteAudiosSession = sessionStorage.getItem("muteAudios")
             $("#gandalfVideo").hide()
-            // $("#gandalfVideo").prop("muted", true)
-            // if(muteAudiosSession!="true"){
-            //     demuteAudios();
-            // }
         }
     )
-
     $("#spanGimli").hover(function(){
-        // let muteAudiosSession = sessionStorage.getItem("muteAudios")
         $("#gimliVideo").show()
-        // if(muteAudiosSession!="true"){
-        //     $("#gimliVideo").prop("muted", false)
-        //     $("#audioMusic").prop("muted", true)
-        // }
         }, function(){
-            // let muteAudiosSession = sessionStorage.getItem("muteAudios")
             $("#gimliVideo").hide()
-            // $("#gimliVideo").prop("muted", true)
-            // if(muteAudiosSession!="true"){
-            //     demuteAudios();
-            // }
         }
     )
-
     $("#spanLegolas").hover(function(){
-        // let muteAudiosSession = sessionStorage.getItem("muteAudios")
         $("#legolasVideo").show()
-        // if(muteAudiosSession!="true"){
-        //     $("#legolasVideo").prop("muted", false)
-        //     $("#audioMusic").prop("muted", true)
-        // }
         }, function(){
-            // let muteAudiosSession = sessionStorage.getItem("muteAudios")
             $("#legolasVideo").hide()
-            // $("#legolasVideo").prop("muted", true)
-            // if(muteAudiosSession!="true"){
-            //     demuteAudios();
-            // }
         }
     )
-
 
 </script>
