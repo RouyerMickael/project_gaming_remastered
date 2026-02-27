@@ -1,14 +1,14 @@
 
-<div class="row" style="padding: 20px;">
+<div class="row" style="padding: 20px; border-bottom: white solid 2px">
 
-    <div class="col-6 text-start">
-        <div class="row mb-1">
-            <span class="d-flex">
+    <div class="col-3 text-start">
+        <div class="row mb-2">
+            <span class="col-12 d-flex flex-wrap">
                 <i class="fas fa-user me-2"></i>
                 {{app.user|capitalize}}
             </span>
         </div>
-        <div class="row mb-1">
+        <div class="row mb-2">
             <a class="text-light text-decoration-none hoverBold" href="{{ path('home') }}">
                 <i class="fas fa-home"></i>
                 Retour accueil
@@ -22,8 +22,18 @@
         </div>
     </div>
 
-    <div class="col-6 text-end">
-        <div class="row mb-1">
+    <div class="col-6 text-center">
+        <h1 class="titreIndex">
+            HTML5 GAMING REMASTERED
+            <br/>
+            <small><i>
+                by Mickael <i class="fa-solid fa-gamepad"></i>
+            </i></small>
+        </h1>
+    </div>
+
+    <div class="col-3 text-end">
+        <div class="row mb-2">
             <span id="muteMusic" class="text-light text-decoration-none hoverBold cursor">
                 Mettre en sourdine
                 <i class="fa-solid fa-volume-xmark"></i>
@@ -33,23 +43,11 @@
                 <i class="fa-solid fa-volume-high"></i>
             </span>
         </div>
-        <div class="row mb-1">
+        <div class="row mb-2">
             <span id="startMusic" class="text-light text-decoration-none hoverBold cursor">
                 Relancer la musique
                 <i class="fa-solid fa-music"></i>   
             </span>
-        </div>
-    </div>
-
-    <div class="row" style="padding: 20px; border-bottom: white solid 2px">
-        <div class="col-12 text-center">
-            <h1 class="titreIndex">
-                HTML5 GAMING REMASTERED
-                <br/>
-                <small><i>
-                    by Mickael <i class="fa-solid fa-gamepad"></i>
-                </i></small>
-            </h1>
         </div>
     </div>
 

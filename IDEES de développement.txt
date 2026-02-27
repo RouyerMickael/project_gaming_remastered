@@ -44,6 +44,7 @@ EPITECH
 STAR WARS
 -> ajouter un son de tir pour le destroyer
 -> remplacer "vie" par "boucliers"
+-> rendre réaliste le tir des vaisseaux (xwing 4 lasers et bouclier, faucon millenium pas de pouvoir mais tir auto de tourelles, a-wing tir de surchauffe, b-wing bombes aion, naboo starfighter tir bombe jedi, b-wing bombes paralysantes, etc.)
 -> amélioration des vaisseaux in-game (vue de dessus) + faire tirer depuis les tourelles (+ ajouter deuxième tir du coup)
 -> amélioration du choix des vaisseaux (images et descriptif audio (celui de rogue leader))
 -> amélioration des bonus 
@@ -60,6 +61,7 @@ STAR WARS
 -> changement gameplay y-wing: grâce à son canon ion, il peut empêcher les tirs adverses de s'activer, mais devra re-tirer pendant ce timing pour pouvoir détruire
 -> pour la bombre sismique, faire un tir qui va automatiquement au centre et fait exploser l'ensemble si dispo
 -> certains bonus se rechargents (exemple a-wing, x-wing) tandis que d'autres se comptent en nombre (bombes)
+-> changer fond pour que apparence vue cockpit, et différent selon vaisseau choisit
 
 
 TOUS
