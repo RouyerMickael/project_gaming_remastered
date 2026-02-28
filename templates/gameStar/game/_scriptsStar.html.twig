@@ -18,24 +18,25 @@ textBonus.hidden=true;
 let audioMusicMenu = document.getElementById('audioMusicMenu');
 audioMusicMenu.play();
 //choix du personnage
-let character ="";
-character = prompt("Quel vaisseau voulez-vous piloter ('xwing', 'ywing', ou 'awing') ?");
-while(character!="xwing" && character !="ywing" && character !="awing"){
-    if(character==null){
-        document.location.href="../index.html"
-    } else {
-        if (character == ""){
-            alert("Ce vaisseau n'existe pas ou n'est pas disponible");
-            character = prompt("Quel vaisseau voulez-vous piloter ('xwing', 'ywing', ou 'awing') ?");
-        } else {
-            character = character.trim().toLowerCase();
-            if(character!="xwing" && character !="ywing" && character !="awing"){
-                alert("Ce vaisseau n'existe pas ou n'est pas disponible");
-                character = prompt("Quel vaisseau voulez-vous piloter ('xwing', 'ywing', ou 'awing') ?");
-            }
-        }
-    }
-}
+// let character ="";
+// character = prompt("Quel vaisseau voulez-vous piloter ('xwing', 'ywing', ou 'awing') ?");
+// while(character!="xwing" && character !="ywing" && character !="awing"){
+//     if(character==null){
+//         document.location.href="../index.html"
+//     } else {
+//         if (character == ""){
+//             alert("Ce vaisseau n'existe pas ou n'est pas disponible");
+//             character = prompt("Quel vaisseau voulez-vous piloter ('xwing', 'ywing', ou 'awing') ?");
+//         } else {
+//             character = character.trim().toLowerCase();
+//             if(character!="xwing" && character !="ywing" && character !="awing"){
+//                 alert("Ce vaisseau n'existe pas ou n'est pas disponible");
+//                 character = prompt("Quel vaisseau voulez-vous piloter ('xwing', 'ywing', ou 'awing') ?");
+//             }
+//         }
+//     }
+// }
+let character = '{{ weapons }}';
 let audioDescription=null;
 let imageCharacter ='';
 let imageWeapon = '';

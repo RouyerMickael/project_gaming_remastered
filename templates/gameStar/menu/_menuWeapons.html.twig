@@ -1,0 +1,114 @@
+<style>
+    .overTopVideo {
+        position: absolute;
+        cursor: pointer;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: black;
+        display: none;
+        width: 100% ;
+        height: 100%
+    }
+</style>
+
+
+<div class="row">
+    <div class="col-12 mb-4">
+        <h3 id="test">Choisissez votre vaisseau...</h3>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <div id="spanXwing" width="400" height="300" class="position-relative" onclick="nextStep('xwing')">
+                <img id="xwingImage" width="400" height="300" src="{{asset('assets/gameStar/assetsGame/menus/xwing.webp')}}">
+                <br/>
+                <video id="xwingVideo" class="overTopVideo" type="video/mp4" autoplay loop muted>
+                    <source src="{{asset('assets/gameStar/assetsGame/menus/xwing_presentation.mp4')}}" type="video/mp4">
+                </video>
+            </div>
+            <br/>
+            <h6>Xwing</h6>
+        </div>
+        <div class="col">
+            <div id="spanYwing" width="400" height="300" class="position-relative" onclick="nextStep('ywing')">
+                <img id="ywingImage" width="400" height="300" src="{{asset('assets/gameStar/assetsGame/menus/ywing.jpg')}}">
+                <br/>
+                <video id="ywingVideo" class="overTopVideo" type="video/mp4" autoplay loop muted>
+                    <source src="{{asset('assets/gameStar/assetsGame/menus/ywing_presentation.mp4')}}" type="video/mp4">
+                </video>
+            </div>
+            <br/>
+            <h6>Ywing</h6>
+            <br/>
+        </div>
+        <div class="col">
+            <div  id="spanAwing" width="400" height="300" class="position-relative" onclick="nextStep('awing')">
+                <img id="awingImage" width="400" height="300" src="{{asset('assets/gameStar/assetsGame/menus/awing.webp')}}">
+                <br/>
+                <video id="awing" class="overTopVideo" type="video/mp4" autoplay loop muted>
+                    <source src="{{asset('assets/gameStar/assetsGame/menus/awing_presentation.mp4')}}" type="video/mp4">
+                </video>
+            </div>
+            <br/>
+            <h6>Awing</h6>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var audioMusic = document.getElementById('audioMusic')
+    var xwingAudio = document.getElementById('xwingAudio')
+    var ywingVideo = document.getElementById('ywingVideo')
+    var awing = document.getElementById('awing')
+
+    $(document).ready(function() {
+        //random start videos
+        $('#xwingVideo').on('loadedmetadata', function() {
+            this.currentTime = Math.random() * this.duration;
+        });
+        $('#ywingVideo').on('loadedmetadata', function() {
+            this.currentTime = Math.random() * this.duration;
+        });
+        $('#awing').on('loadedmetadata', function() {
+            this.currentTime = Math.random() * this.duration;
+        });
+    });
+
+    //hover videos
+    $("#spanXwing").hover(function(){
+        $("#xwingVideo").show()
+        xwingAudio.play()
+        audioMusic.pause()
+        }, function(){
+            $("#xwingVideo").hide()
+            audioMusic.play()
+            xwingAudio.pause()
+            xwingAudio.currentTime = 0
+        }
+    )
+    $("#spanYwing").hover(function(){
+        $("#ywingVideo").show()
+        ywingAudio.play()
+        audioMusic.pause()
+        }, function(){
+            $("#ywingVideo").hide()
+            audioMusic.play()
+            ywingAudio.pause()
+            ywingAudio.currentTime = 0
+        }
+    )
+    $("#spanAwing").hover(function(){
+        $("#awing").show()
+        awingAudio.play()
+        audioMusic.pause()
+        }, function(){
+            $("#awing").hide()
+            audioMusic.play()
+            awingAudio.pause()
+            awingAudio.currentTime = 0
+        }
+    )
+
+</script>

@@ -12,6 +12,7 @@ deltaDivisor = sessionStorage.getItem("deltaDivisor");
 //choix du personnage
 // let character = prompt("Quel personnage voulez-vous incarner ('legolas', 'gimli', ou 'gandalf') ?").toLowerCase();
 let character = 'guitare';
+let controlChoices= '{{ controls }}';
 let imageCharacter ='';
 let imageWeapon = '';
 let characterLife = '';
@@ -48,8 +49,8 @@ imagePlayer.innerHTML = imageCharacter;
 //     alert("Ces commandes n'existent pas.");
 //     window.location.reload();
 // }
-alert("Ce jeu se joue à la souris:\ndéplacements latéraux = déplacer la souris ; tirs = clic gauche.\nGardez le rythme !")
-let controlChoices = "souris"
+// alert("Ce jeu se joue à la souris:\ndéplacements latéraux = déplacer la souris ; tirs = clic gauche.\nGardez le rythme !")
+// let controlChoices = "souris"
 
 
 //lancements sonores, liste audios
@@ -1034,7 +1035,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
         audioShoot3.pause();
         audioShoot3.currentTime=0;
     });
-});
+    window.addEventListener('keyup', e => {
+        if (e.code === 'Space') {
+            audioShoot3.pause();
+            audioShoot3.currentTime = 0;
+        }
+    });
+}); 
 
 
 </script>

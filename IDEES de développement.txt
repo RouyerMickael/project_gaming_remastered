@@ -46,6 +46,7 @@ STAR WARS
 -> remplacer "vie" par "boucliers"
 -> rendre réaliste le tir des vaisseaux (xwing 4 lasers et bouclier, faucon millenium pas de pouvoir mais tir auto de tourelles, a-wing tir de surchauffe, b-wing bombes aion, naboo starfighter tir bombe jedi, b-wing bombes paralysantes, etc.)
 -> amélioration des vaisseaux in-game (vue de dessus) + faire tirer depuis les tourelles (+ ajouter deuxième tir du coup)
+-> probleme avec le Ywing et le reset de la partie après utilisation du pouvoir, le +400 reste
 -> amélioration du choix des vaisseaux (images et descriptif audio (celui de rogue leader))
 -> amélioration des bonus 
 	--> image, vitesse, et équilibrage pour tous
@@ -65,10 +66,10 @@ STAR WARS
 
 
 TOUS
--> faire en sorte que la page en hauteur s'adapte au canvas et au reste (qu'on soit pas obligé de dézoomer)
+
 -> selon la vie perdue, ajouter un border sur le canvas (jaune/orange/rouge) qui s'efface ensuite, selon la vulnérabilité du coup reçu (ex. si -10 ou -20 ou -30)
 -> compresser toutes les images
--> trouver le moyen d'empêcher la souris de sortir du canvas
+-> trouver le moyen d'empêcher la souris de sortir du canvas ou que le système se rapelle du dernier point de la souris si elle sort
 -> proposer une regame ou un changement de perso à chaque partie, ou alors un bouton href pour aller au menu de choix des persos
 
 
@@ -82,18 +83,15 @@ NOUVEAU JEU GES
 --------------------------------------------------------------------------------------
 
 EN COURS
--> choix des persos/vaisseaux via des menus + au hover: 
-	-> proposer un audio descriptif :
-		-> pour star wars: audio Rogue Leader
-	-> et/ou des vidéos de présentation :
-		-> pour Seigneur des Anneaux :
-			-> Gimli: https://www.youtube.com/watch?v=NgiVlIZXCnk&ab_channel=GamewithMovie
-			-> Legolas: https://www.youtube.com/watch?v=H9KP564Ws74&ab_channel=GamewithMovie
-			-> Gandalf: https://www.youtube.com/watch?v=qy9jtSxyhn8&ab_channel=GamewithMovie
-			-> faire démarrer les vidéos à des time random car sinon c'est toujours le début des vidéos qui revient
--> avec une variable de session, faire en sorte que la musique/son de tous les audios (video compris) ne se lancent plus sur une aucune page
+
+-> faire en sorte que la page en hauteur s'adapte au canvas et au bonus (qu'on soit pas obligé de dézoomer)
+
 --------------------------------------------------------------------------------------
 
 FAIT:
+
+Tous:
 Tous-> mettre l'ensemble du projet à iso-fonctionnalité dans une architecture Symfony pour sécuriser les entrées/sorties en BDD, et faciliter les templates/controllers
 Tous-> correction des problèmes de vitesse de défilement/déplacement dûes au taux de rafraichissement de certians moniteurs (exemple ordis portables)
+Tous-> avec une variable de session, faire en sorte que la musique/son de tous les audios (video compris) ne se lancent plus sur une aucune page
+Tous-> ajout de menus avec audios et/ou vidéos de présentation lancées à currentTime aléatoire

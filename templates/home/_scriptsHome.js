@@ -81,35 +81,24 @@ function getGame(game) {
       } else if(game=='star'){
         gameChoosen = true;
         var menu = document.getElementById('menuPrincipal');
-        url = '{{ path("starMenu") }}'; 
+        url = '{{ path("menuStar") }}'; 
         menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video width=100% height=100% class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/star/star_wars.mp4" type="video/mp4"></video><a class="buttonPerso" href="/">Retour</a>';
         var audio = document.getElementById('audioMusic');
         audio.pause();
         audio.currentTime = 0;
       } else if(game=='epitech'){
         var menu = document.getElementById('menuPrincipal');
-        var presentator = prompt("Qui voulez-vous en intro ? ('sophie' ou 'directeur')").toLowerCase();
-        url = '{{ path("epitechMenu") }}'; 
-        switch (presentator) {
-          case 'sophie':
-            gameChoosen = true;
-            menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video width=100% height=100% class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/epitech/epitech_sophie.mp4" type="video/mp4"></video><a class="buttonPerso" href="/">Retour</a>';
-            break;
-          case 'directeur':
-            gameChoosen = true;
-            menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video width=100% height=100% class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/epitech/epitech_directeur.mp4" type="video/mp4"></video><a class="buttonPerso" href="/">Retour</a>';
-          break;
-          default:
-            alert("Cette AER n'existe pas.");
-            window.location.reload();
-        }
+        url = '{{ path("menuEpitech") }}'; 
+        gameChoosen = true;
+        menu.innerHTML = '<a class="buttonPerso" href='+url+'>Jouer...</a><video width=100% height=100% class="audio" autoplay '+muted+' loop><source src="assets/videos/intros/epitech/epitech_all.mp4" type="video/mp4"></video><a class="buttonPerso" href="/">Retour</a>';
         var audio = document.getElementById('audioMusic');
         audio.pause();
         audio.currentTime = 0;
       } else if(game=='sexe'){
         var menu = document.getElementById('menuPrincipal');
-        alert("Confirmes que tu as 18ans!");
-        alert("Mytho !");
+        if (confirm("En continuant je confirme avoir 18ans ou plus.")) {
+            alert("Mytho !")
+        }
       }
     } else {
       alert("Vous n'avez pas confirmer la modification de votre pseudo...")

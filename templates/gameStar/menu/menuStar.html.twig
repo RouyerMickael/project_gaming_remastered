@@ -1,0 +1,91 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <audio id="audioMusic" class="audio" autoplay loop src="{{asset('assets/gameStar/assetsGame/audios/musics/menu.mp3')}}"></audio>
+    <audio id="xwingAudio" class="audio" src="{{asset('assets/gameStar/assetsGame/menus/xwing_audio_presentation.mp3')}}"></audio>
+    <audio id="ywingAudio" class="audio" src="{{asset('assets/gameStar/assetsGame/menus/ywing_audio_presentation.mp3')}}"></audio>
+    <audio id="awingAudio" class="audio" src="{{asset('assets/gameStar/assetsGame/menus/awing_audio_presentation.mp3')}}"></audio>
+
+
+    <div class="menu" style="color:#FFE81F;">
+
+        <div class="row">
+            <div class="col-12">
+                <div>
+                    <h3>Bienvenue, amis de la rébellion !</h3>
+                </div>
+                <div class="mt-4">
+                    <h5>
+                        Il s'agit d'un jeu type SpaceInvaders où le but sera de survivre le plus longtemps possible
+                        tout en tuant un maximum de vaisseaux de l'Empire !
+                    </h5>
+                    <br/>
+                    <h5>
+                        A chacune de vos morts, votre score est enregistré et retrouvable dans le tableau des scores accessible via l'accueil.
+                    </h5>
+                </div>
+                <div class="mt-4">
+                    <button class="btn btn-outline-light" onclick="nextStep(null)">
+                        continuer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        
+        $(document).ready(
+            function(){
+                checkMuteAudios()
+            }
+        )
+        
+        var stepMenu = 0
+        
+        var controls = ""
+        var weapons = ""
+
+
+        function nextStep(variable){
+            //IMPORTANT: en cas de (gros) problèmes de performance liées par exemple aux vidéos (mais pas que), pensez à activer dans php.ini 
+            //de WAMP l'option session.auto_start = 1
+            stepMenu = stepMenu + 1
+            console.log(stepMenu)
+            if(stepMenu===2){
+                controls = variable
+                console.log(controls)
+            } else if(stepMenu===3){
+                weapons = variable
+                console.log(weapons)
+            }
+            console.log(stepMenu)
+            // $(".menu").html("<img src='{{asset('assets/gameSeigneur/assetsGame/images/loader.gif')}}'>")
+            $.ajax({
+                // Adresse à laquelle la requête est envoyée
+                url: "{{ path('menuStar') }}",
+                // Le délai maximun en millisecondes de traitement de la demande
+                type: "POST",
+                data: {
+                    "stepMenu": stepMenu,
+                    "controls": controls,
+                    "weapons": weapons
+                },
+                // La fonction à apeller si la requête aboutie
+                success: function (result) {
+                    $(".menu").html(result)
+                },
+                // La fonction à appeler si la requête n'a pas abouti
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('nextStep error:'+textStatus)
+                }
+            });
+        }
+
+    </script>
+
+{% endblock %}

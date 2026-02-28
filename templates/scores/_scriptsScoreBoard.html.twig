@@ -7,8 +7,9 @@
         let gameId = $("#selectGame").find(":selected").val()
         let gameName = $("#selectGame").find(":selected").text()
         if(gameName=='Adulte'){
-            alert("Confirmes que tu as 18ans!")
-            alert("Mytho !")
+            if (confirm("En continuant je confirme avoir 18ans ou plus.")) {
+                alert("Mytho !")
+            }
         }
         $.ajax({
             // Adresse à laquelle la requête est envoyée

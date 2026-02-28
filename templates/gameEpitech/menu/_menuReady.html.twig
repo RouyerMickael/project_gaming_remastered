@@ -1,0 +1,25 @@
+
+
+<div class="row">
+    <div class="col-12">
+        <div>
+            <h4>
+                Votre <b>{{weapons|capitalize}}</b> est prête !
+            <h4>
+            <h4>
+                Préparez votre <b>{{controls}}</b> pour la bataille !
+            <h4> 
+        </div>
+
+        <div class="mt-4">
+            <form action="{{ path('gameEpitech') }}" method="POST">
+                <input type="hidden" name="controls" value="{{controls}}"/>
+                <input type="hidden" name="weapons" value="{{weapons}}"/>
+                <button class="btn btn-outline-light" type="submit">Lancer la bataille</button>
+            </form>
+        </div>
+        
+    </div>
+</div>
+
+
