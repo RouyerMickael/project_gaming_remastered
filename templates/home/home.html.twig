@@ -1,34 +1,147 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseHome.html.twig' %}
 
 {# {% block title %}Hello IndexController!{% endblock %} #}
 
 {% block body %}
 
-    <audio id="audioMusic" class="audio" autoplay loop src="assets/music/index.mp3"></audio>
+<audio id="audioMusic" class="audio" autoplay loop src="assets/music/index.mp3"></audio>
 
-    <div class="container">
+<div class="row h-100 py-1 mx-0">
 
-        <br/>
+    {# COLONNE GAUCHE #}
+    <div class="d-lg-block d-none col-3 position-relative">
+        <video id="videoMenu1" class="videoMenu w-100 position-absolute top-0 start-0" muted></video>
+        <video id="videoMenu2" class="videoMenu w-100 position-absolute bottom-0 start-0" muted></video>
+    </div>
+
+    {# COLONNE CENTRALE (MENU) #}
+    <div class="col-lg-6 col-12 d-flex flex-column justify-content-center">
+
         <nav>
             <ul id="menuPrincipal" class="nav flex-column">
                 <h4 class="titreMenu">Menu de Jeux</h4>
-                <li class="nav-item"><a class="nav-link text-white" onclick="getGame('epitech')">Facile (Epitech)</a></li>
-                <li class="nav-item"><a class="nav-link text-white" onclick="getGame('star')">Normal (Star Wars)</a></li>
-                <li class="nav-item"><a class="nav-link text-white" onclick="getGame('seigneur')">Difficile (Seigneur des Anneaux)</a></li>
-                <li class="nav-item"><a class="nav-link text-white " onclick="getGame('sexe')">Special (Films X)</a></li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" onclick="getGame('epitech')">Epitech (facile)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" onclick="getGame('star')">Star Wars (normal)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" onclick="getGame('seigneur')">Seigneur des Anneaux (difficile)</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" onclick="getGame('sexe')">Adulte (special)</a>
+                </li>
             </ul>
         </nav>
-        <br/>
-        <br/>
+
+        <br/><br/>
+
         <a href="{{ path('scoresMenu') }}">
-            <input class="btn btn-secondary" style="width:250px;height:50px" type="submit" value="Voir le tableau des scores" />
+            <input class="btn btn-secondary" style="width:250px;height:50px"
+                   type="submit" value="Voir le tableau des scores" />
         </a>
 
     </div>
 
-    <script>
-        {% include "home/_scriptsHome.js" %}
-    </script>
+    {# COLONNE DROITE #}
+    <div class="d-lg-block d-none col-3 position-relative">
+        <video id="videoMenu3" class="videoMenu w-100 position-absolute top-0 end-0" muted></video>
+        <video id="videoMenu4" class="videoMenu w-100 position-absolute bottom-0 end-0" muted></video>
+    </div>
+
+</div>
+
+<script>
+    {% include "home/_scriptsHome.js" %}
+</script>
+
+<script>
+$(function () {
+
+    const videosSources = [
+        { src: 'assets/videos/intros/star/star_wars.mp4', bandes: true },
+        { src: 'assets/videos/intros/seigneur/seigneur_intro.mp4', bandes: true },
+        { src: 'assets/videos/intros/epitech/epitech_all.mp4', bandes: false },
+    ];
+
+    const FADE_DURATION = 1000;
+    const DISPLAY_DURATION = 6000;
+
+    // Ordre imposé des emplacements :
+    // videoMenu1 -> videoMenu4 -> videoMenu2 -> videoMenu3
+    const videoZones = [
+        document.getElementById('videoMenu1'),
+        document.getElementById('videoMenu4'),
+        document.getElementById('videoMenu2'),
+        document.getElementById('videoMenu3')
+    ];
+
+    let currentZoneIndex = 0;
+
+    if (!videoZones.length) return;
+
+    function getRandomVideo() {
+        return videosSources[Math.floor(Math.random() * videosSources.length)];
+    }
+
+    function getNextZone() {
+        const zone = videoZones[currentZoneIndex];
+        currentZoneIndex = (currentZoneIndex + 1) % videoZones.length;
+        return zone;
+    }
+
+    function lancerVideo() {
+
+        const video = getNextZone();
+        const $video = $(video);
+        const current = getRandomVideo();
+
+        video.pause();
+        $video.stop(true, true).css({ opacity: 0 });
+
+        video.src = current.src;
+        video.loop = true;
+        video.muted = true;
+        video.load();
+
+        video.addEventListener('loadedmetadata', function onMeta() {
+
+            $video.css('object-fit', current.bandes ? 'fill' : 'cover');
+            $video.toggleClass('videoMenuReduce', !current.bandes);
+
+            const randomTime = Math.random() * (video.duration * 0.8);
+            video.currentTime = randomTime;
+
+            video.play().catch(() => {});
+
+        }, { once: true });
+
+        $video.animate({ opacity: 1 }, FADE_DURATION);
+
+        setTimeout(() => {
+
+            $video.animate({ opacity: 0 }, FADE_DURATION, function () {
+
+                video.pause();
+                video.loop = false;
+                video.removeAttribute('src');
+                video.load();
+
+                lancerVideo();
+
+            });
+
+        }, DISPLAY_DURATION);
+    }
+
+    lancerVideo();
+
+});</script>
 
 {% endblock %}
 

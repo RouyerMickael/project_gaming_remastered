@@ -63,6 +63,7 @@ buttonChangePseudo.addEventListener('click', event => {
 
 
 function getGame(game) {
+    $('.videoMenu').addClass('d-none');
     let muted = ""
     var muteAudiosSession = sessionStorage.getItem("muteAudios")
     if(muteAudiosSession==="true"){

@@ -111,4 +111,12 @@
         }
     )
 
+    $(".overTopVideo").on("click", function () {
+        audioMusic.play();
+        $(".audioDescription").each(function () {
+            this.pause();
+            this.currentTime = 0;
+        });
+    });
+
 </script>

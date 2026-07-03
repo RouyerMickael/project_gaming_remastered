@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <meta charset="UTF-8" name="description" content="Phaser.js game demo" >
+        <title>{% block title %}Phaser.js game demo{% endblock %}</title>
+        <link rel="icon" type="image/x-icon" href="{{asset('assets/favicon.png')}}">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {# {{ encore_entry_link_tags('app') }} #}
+            <link rel="stylesheet" href="assets/css/htmlGaming.css">
+            <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+            <script src="{{asset('libs/phaser/phaser.min.js')}}" type="text/javascript"></script>
+            <link rel="stylesheet" href="{{ asset('libs/fontawesome/css/all.min.css') }}">
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        {% block javascripts %}
+            {# {{ encore_entry_script_tags('app') }} #}
+            <script src="libs/jquery/jquery.min.js"></script>
+        {% endblock %}
+    </head>
+    <body>
+        <div style="height:16vh">
+            {% if app.user %}
+                {% include "_baseTitle.html.twig" %}
+            {% endif %}
+        </div>
+        <div class="container-fluid text-center position-relative" style="height:84vh">
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+    <script>
+        {% block javascript %}{% endblock %}
+    </script>
+</html>
